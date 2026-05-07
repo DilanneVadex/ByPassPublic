@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Palette VaultPass -->
+    <color name="vp_purple_title">#8A56AC</color>   <!-- Violet foncé du titre -->
+    <color name="vp_lavender_btn">#C099E4</color>   <!-- Bouton Connexion -->
+    <color name="vp_input_stroke">#B388FF</color>   <!-- Bordure des champs -->
+    <color name="vp_text_grey">#757575</color>       <!-- Slogan et indices -->
+    <color name="vp_divider">#E0E0E0</color>         <!-- Ligne "Or login with" -->
 </resources>

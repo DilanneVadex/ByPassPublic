@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">ByPass</string>
+    <string name="app_name">VaultPass</string>
+    <string name="title_vaultpass">VaultPass</string>
+    <string name="subtitle_secured">Your passwords. Secured.</string>
+    <string name="hint_email">Enter your email</string>
+    <string name="hint_password">Enter your password</string>
+    <string name="btn_login">Connexion</string>
+    <string name="or_login_with">Or login with</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="sign_in_github">Sign in with Github</string>
 </resources>

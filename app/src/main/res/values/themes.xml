@@ -1,9 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.ByPass" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/vp_purple_title</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
     <style name="Theme.ByPass" parent="Base.Theme.ByPass" />
+
+    <!-- Style pour les boutons sociaux (Google/Github) -->
+    <style name="Widget.ByPass.SocialButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">#616161</item>
+        <item name="android:textSize">14sp</item>
+        <item name="strokeColor">#E0E0E0</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ByPass.Medium</item>
+    </style>
+
+    <style name="ShapeAppearance.ByPass.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">12dp</item>
+    </style>
 </resources>
