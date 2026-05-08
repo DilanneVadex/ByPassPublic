@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Palette Principale -->
+    <color name="primary">#6E00AE</color>
+    <color name="primary_40">#666E00AE</color>
+    <color name="primary_20">#336E00AE</color>
 
-    <!-- Palette VaultPass -->
-    <color name="vp_purple_title">#8A56AC</color>   <!-- Violet foncé du titre -->
-    <color name="vp_lavender_btn">#C099E4</color>   <!-- Bouton Connexion -->
-    <color name="vp_input_stroke">#B388FF</color>   <!-- Bordure des champs -->
-    <color name="vp_text_grey">#757575</color>       <!-- Slogan et indices -->
-    <color name="vp_divider">#E0E0E0</color>         <!-- Ligne "Or login with" -->
+    <color name="secondary">#DB7777</color>
+    <color name="secondary_40">#66DB7777</color>
+    <color name="secondary_36">#5CDB7777</color>
+
+    <!-- Couleurs de base -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="green">#34C759</color>
+    <color name="red">#FF0404</color>
+
+    <!-- Compatibilité avec le layout existant (redirection vers la nouvelle palette) -->
+    <color name="vp_purple_title">@color/primary</color>
+    <color name="vp_lavender_btn">@color/primary_40</color>
+    <color name="vp_input_stroke">@color/primary_20</color>
+    <color name="vp_text_grey">#757575</color>
+    <color name="vp_divider">#E0E0E0</color>
 </resources>

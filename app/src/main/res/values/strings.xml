@@ -8,4 +8,25 @@
     <string name="or_login_with">Or login with</string>
     <string name="sign_in_google">Sign in with Google</string>
     <string name="sign_in_github">Sign in with Github</string>
+
+    <!-- Home Screen -->
+    <string name="title_password_vault">Password Vault</string>
+    <string name="hint_search">Rechercher...</string>
+    <string name="label_security_score">Security Score</string>
+    <string name="value_security_score">82% Secure</string>
+    <string name="label_favoris">Favoris</string>
+    <string name="label_categories">Categories</string>
+    <string name="label_password">password</string>
+
+    <!-- Categories -->
+    <string name="cat_social">Social</string>
+    <string name="cat_work">Work</string>
+    <string name="cat_bank">Bank</string>
+    <string name="cat_shopping">Shopping</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_generator">Generator</string>
+    <string name="nav_security">Security</string>
+    <string name="nav_settings">Settings</string>
 </resources>

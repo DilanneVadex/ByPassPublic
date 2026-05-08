@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home_4_fill"
+        android:title="@string/nav_home" />
+    <item
+        android:id="@+id/nav_generator"
+        android:icon="@drawable/flashlight_fill"
+        android:title="@string/nav_generator" />
+    <item
+        android:id="@+id/nav_security"
+        android:icon="@drawable/shield_flash_fill"
+        android:title="@string/nav_security" />
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/settings_3_fill"
+        android:title="@string/nav_settings" />
+</menu>

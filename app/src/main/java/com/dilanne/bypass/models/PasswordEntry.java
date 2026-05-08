@@ -13,6 +13,7 @@ public class PasswordEntry {
     private String encryptedPassword;
     private String category;
     private long lastModified;
+    private boolean isFavorite;
 
     public PasswordEntry(String title, String email, String encryptedPassword, String category) {
         this.title = title;
@@ -20,6 +21,7 @@ public class PasswordEntry {
         this.encryptedPassword = encryptedPassword;
         this.category = category;
         this.lastModified = System.currentTimeMillis();
+        this.isFavorite = false;
     }
 
     // Getters and Setters
@@ -35,4 +37,6 @@ public class PasswordEntry {
     public void setCategory(String category) { this.category = category; }
     public long getLastModified() { return lastModified; }
     public void setLastModified(long lastModified) { this.lastModified = lastModified; }
+    public boolean isFavorite() { return isFavorite; }
+    public void setFavorite(boolean favorite) { isFavorite = favorite; }
 }
