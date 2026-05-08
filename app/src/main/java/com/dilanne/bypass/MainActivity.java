@@ -1,5 +1,6 @@
 package com.dilanne.bypass;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.dilanne.bypass.databinding.ActivityMainBinding;
 import com.dilanne.bypass.models.Category;
 import com.dilanne.bypass.models.PasswordEntry;
+import com.dilanne.bypass.ui.activities.AddAccountActivity;
 import com.dilanne.bypass.ui.adapters.CategoryAdapter;
 import com.dilanne.bypass.ui.adapters.FavorisAdapter;
 import com.dilanne.bypass.ui.adapters.PasswordAdapter;
@@ -47,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
         setupSearch();
         observeViewModel();
         setupBottomNav();
+        setupFab();
+    }
+
+    private void setupFab() {
+        binding.fabAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddAccountActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setupSearch() {

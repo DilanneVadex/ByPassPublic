@@ -9,11 +9,17 @@ public class PasswordEntry {
     private int id;
     
     private String title;
+    private String url;
     private String email;
     private String encryptedPassword;
     private String category;
     private long lastModified;
     private boolean isFavorite;
+
+    public PasswordEntry() {
+        this.lastModified = System.currentTimeMillis();
+        this.isFavorite = false;
+    }
 
     public PasswordEntry(String title, String email, String encryptedPassword, String category) {
         this.title = title;
@@ -29,6 +35,8 @@ public class PasswordEntry {
     public void setId(int id) { this.id = id; }
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
+    public String getUrl() { return url; }
+    public void setUrl(String url) { this.url = url; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     public String getEncryptedPassword() { return encryptedPassword; }
