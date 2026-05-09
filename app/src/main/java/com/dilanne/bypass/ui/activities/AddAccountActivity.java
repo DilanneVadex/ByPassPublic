@@ -12,8 +12,11 @@ import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
 
 public class AddAccountActivity extends AppCompatActivity {
 
+    public static final String EXTRA_PASSWORD_ENTRY = "extra_password_entry";
+
     private ActivityAddAccountBinding binding;
     private PasswordViewModel viewModel;
+    private PasswordEntry editingEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +26,33 @@ public class AddAccountActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
 
+        if (getIntent().hasExtra(EXTRA_PASSWORD_ENTRY)) {
+            editingEntry = (PasswordEntry) getIntent().getSerializableExtra(EXTRA_PASSWORD_ENTRY);
+            setupEditMode();
+        } else {
+            setupAddMode();
+        }
+
         binding.btnBack.setOnClickListener(v -> finish());
         binding.btnCancel.setOnClickListener(v -> finish());
         binding.btnConfirm.setOnClickListener(v -> handleSave());
 
         setupLivePreview();
+    }
+
+    private void setupAddMode() {
+        binding.tvTitle.setText("Add Account");
+    }
+
+    private void setupEditMode() {
+        binding.tvTitle.setText(editingEntry.getTitle() + " Edit Account");
+        binding.etUrl.setText(editingEntry.getUrl());
+        binding.etLogin.setText(editingEntry.getEmail()); // In this app email/login seem interchangeable in fields
+        
+        String decrypted = viewModel.decryptPassword(editingEntry.getEncryptedPassword());
+        binding.etPassword.setText(decrypted);
+        
+        updatePreview();
     }
 
     private void setupLivePreview() {
@@ -43,22 +68,21 @@ public class AddAccountActivity extends AppCompatActivity {
         };
 
         binding.etUrl.addTextChangedListener(watcher);
-        binding.etMail.addTextChangedListener(watcher);
+        binding.etLogin.addTextChangedListener(watcher);
     }
 
     private void updatePreview() {
         String url = binding.etUrl.getText().toString().trim();
-        String mail = binding.etMail.getText().toString().trim();
+        String login = binding.etLogin.getText().toString().trim();
         
-        String displayUrl = url.isEmpty() ? "Service" : url;
-        String displayMail = mail.isEmpty() ? "email" : mail;
+        String displayUrl = url.isEmpty() ? (editingEntry != null ? editingEntry.getTitle() : "Service") : url;
+        String displayMail = login.isEmpty() ? (editingEntry != null ? editingEntry.getEmail() : "email") : login;
         
         binding.tvPreview.setText(displayUrl + " • " + displayMail);
     }
 
     private void handleSave() {
         String url = binding.etUrl.getText().toString().trim();
-        String mail = binding.etMail.getText().toString().trim();
         String login = binding.etLogin.getText().toString().trim();
         String password = binding.etPassword.getText().toString().trim();
 
@@ -67,24 +91,32 @@ public class AddAccountActivity extends AppCompatActivity {
             return;
         }
 
-        // Use the domain or a part of URL as title for now
-        String title = url;
-        if (title.contains(".")) {
-            title = title.substring(0, title.lastIndexOf("."));
-            if (title.startsWith("www.")) title = title.substring(4);
-            title = title.substring(0, 1).toUpperCase() + title.substring(1);
+        PasswordEntry entry = editingEntry != null ? editingEntry : new PasswordEntry();
+        
+        if (editingEntry == null) {
+            // New entry logic for title
+            String title = url;
+            if (title.contains(".")) {
+                title = title.substring(0, title.lastIndexOf("."));
+                if (title.startsWith("www.")) title = title.substring(4);
+                title = title.substring(0, 1).toUpperCase() + title.substring(1);
+            }
+            entry.setTitle(title);
+            entry.setCategory("General");
+            entry.setFavorite(false);
         }
 
-        PasswordEntry entry = new PasswordEntry();
-        entry.setTitle(title);
         entry.setUrl(url);
-        entry.setEmail(mail.isEmpty() ? login : mail); // Fallback to login if email is empty
-        // In a real app, we'd handle category and favorite status too
-        entry.setCategory("General");
-        entry.setFavorite(false);
+        entry.setEmail(login);
+        entry.setLastModified(System.currentTimeMillis());
 
-        viewModel.insert(entry, password);
-        Toast.makeText(this, "Account added successfully!", Toast.LENGTH_SHORT).show();
+        if (editingEntry != null) {
+            viewModel.update(entry, password);
+            Toast.makeText(this, "Account updated successfully!", Toast.LENGTH_SHORT).show();
+        } else {
+            viewModel.insert(entry, password);
+            Toast.makeText(this, "Account added successfully!", Toast.LENGTH_SHORT).show();
+        }
         finish();
     }
 }

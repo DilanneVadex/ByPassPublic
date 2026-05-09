@@ -10,6 +10,9 @@ constraintlayout = "2.2.1"
 room = "2.6.1"
 securityCrypto = "1.1.0-alpha06"
 lifecycle = "2.8.7"
+nbvcxz = "1.5.1"
+retrofit = "2.11.0"
+okhttp = "4.12.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -24,6 +27,10 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "lifecycle" }
+nbvcxz = { group = "me.gosimple", name = "nbvcxz", version.ref = "nbvcxz" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

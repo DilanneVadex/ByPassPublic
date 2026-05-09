@@ -3,8 +3,10 @@ package com.dilanne.bypass.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "passwords")
-public class PasswordEntry {
+public class PasswordEntry implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     

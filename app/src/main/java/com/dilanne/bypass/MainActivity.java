@@ -73,10 +73,19 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        binding.etSearch.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                binding.etSearch.getParent().requestLayout();
-                // On pourrait ajouter une animation ici
+        View rootView = binding.getRoot();
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            android.graphics.Rect r = new android.graphics.Rect();
+            rootView.getWindowVisibleDisplayFrame(r);
+            int screenHeight = rootView.getRootView().getHeight();
+            int keypadHeight = screenHeight - r.bottom;
+
+            if (keypadHeight > screenHeight * 0.15) { // Keyboard is visible
+                binding.bottomNavigation.setVisibility(View.GONE);
+                binding.fabAdd.setVisibility(View.GONE);
+            } else { // Keyboard is hidden
+                binding.bottomNavigation.setVisibility(View.VISIBLE);
+                binding.fabAdd.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -93,12 +102,16 @@ public class MainActivity extends AppCompatActivity {
         binding.rvCategories.setAdapter(categoryAdapter);
 
         // Passwords List (Vertical)
-        passwordAdapter = new PasswordAdapter(this::handleTogglePassword, this::handleEditPassword);
+        passwordAdapter = new PasswordAdapter(
+                this::handleTogglePassword, 
+                this::handleEditPassword,
+                this::handleItemClick
+        );
         binding.rvPasswords.setLayoutManager(new LinearLayoutManager(this));
         binding.rvPasswords.setAdapter(passwordAdapter);
 
         // Favoris List (Horizontal)
-        favorisAdapter = new FavorisAdapter();
+        favorisAdapter = new FavorisAdapter(this::handleItemClick);
         binding.rvFavoris.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rvFavoris.setAdapter(favorisAdapter);
     }
@@ -147,7 +160,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleEditPassword(PasswordEntry entry, View view) {
-        Toast.makeText(this, "Edit: " + entry.getTitle(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, AddAccountActivity.class);
+        intent.putExtra(AddAccountActivity.EXTRA_PASSWORD_ENTRY, entry);
+        startActivity(intent);
+    }
+
+    private void handleItemClick(PasswordEntry entry, View view) {
+        Intent intent = new Intent(this, com.dilanne.bypass.ui.activities.PasswordDetailActivity.class);
+        intent.putExtra(com.dilanne.bypass.ui.activities.PasswordDetailActivity.EXTRA_PASSWORD_ENTRY, entry);
+        startActivity(intent);
     }
 
     private void setupBottomNav() {
@@ -156,13 +177,16 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.nav_home) {
                 return true;
             } else if (itemId == R.id.nav_generator) {
-                Toast.makeText(this, "Générateur", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, com.dilanne.bypass.ui.activities.GeneratorActivity.class);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.nav_security) {
-                Toast.makeText(this, "Sécurité", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, com.dilanne.bypass.ui.activities.SecurityActivity.class);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.nav_settings) {
-                Toast.makeText(this, "Paramètres", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, com.dilanne.bypass.ui.activities.SettingsActivity.class);
+                startActivity(intent);
                 return true;
             }
             return false;

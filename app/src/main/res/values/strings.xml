@@ -8,6 +8,9 @@
     <string name="or_login_with">Or login with</string>
     <string name="sign_in_google">Sign in with Google</string>
     <string name="sign_in_github">Sign in with Github</string>
+    <string name="btn_logout">Logout</string>
+
+
 
     <!-- Home Screen -->
     <string name="title_password_vault">Password Vault</string>
@@ -29,4 +32,27 @@
     <string name="nav_generator">Generator</string>
     <string name="nav_security">Security</string>
     <string name="nav_settings">Settings</string>
+
+    <!-- Profile Screen -->
+    <string name="title_profile">Mon Compte</string>
+    <string name="label_name">Name</string>
+    <string name="label_mail">Mail</string>
+    <string name="label_password_current">Password</string>
+    <string name="label_new_password">New Password</string>
+    <string name="label_confirm_password">Confirm Password</string>
+    <string name="btn_confirm_password">Confirm Password</string>
+    <string name="account_details_header">%1$s Account</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_delete">Delete</string>
+    <string name="delete_confirmation_title">Delete Account</string>
+    <string name="delete_confirmation_message">Are you sure you want to delete this account?</string>
+    <string name="copied_to_clipboard">%1$s copied to clipboard</string>
+
+    <!-- Language Screen -->
+    <string name="title_language">Language</string>
+    <string name="lang_english">English</string>
+    <string name="lang_french">French</string>
+    <string name="lang_german">German</string>
+    <string name="lang_russian">Russian</string>
+    <string name="btn_confirm">Confirm</string>
 </resources>

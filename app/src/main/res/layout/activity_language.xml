@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/arrow_left_line"
+                app:tint="@color/secondary" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/translate_2"
+                    app:tint="@color/secondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/keania_one"
+                    android:text="@string/title_language"
+                    android:textColor="@color/primary"
+                    android:textSize="32sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Language Options -->
+        <RadioGroup
+            android:id="@+id/rgLanguages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp">
+
+            <!-- English -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/primary_20"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/primary_40"
+                app:strokeWidth="1dp">
+
+                <RadioButton
+                    android:id="@+id/rbEnglish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableEnd="@android:drawable/btn_radio"
+                    android:drawableTint="@color/secondary"
+                    android:padding="16dp"
+                    android:text="@string/lang_english"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- French -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/primary_20"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/primary_40"
+                app:strokeWidth="1dp">
+
+                <RadioButton
+                    android:id="@+id/rbFrench"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableEnd="@android:drawable/btn_radio"
+                    android:drawableTint="@color/secondary"
+                    android:padding="16dp"
+                    android:text="@string/lang_french"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- German -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/primary_20"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/primary_40"
+                app:strokeWidth="1dp">
+
+                <RadioButton
+                    android:id="@+id/rbGerman"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableEnd="@android:drawable/btn_radio"
+                    android:drawableTint="@color/secondary"
+                    android:padding="16dp"
+                    android:text="@string/lang_german"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Russian -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/primary_20"
+                app:cardCornerRadius="12dp"
+                app:strokeColor="@color/primary_40"
+                app:strokeWidth="1dp">
+
+                <RadioButton
+                    android:id="@+id/rbRussian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableEnd="@android:drawable/btn_radio"
+                    android:drawableTint="@color/secondary"
+                    android:padding="16dp"
+                    android:text="@string/lang_russian"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </RadioGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConfirm"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/primary"
+            android:text="@string/btn_confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/secondary"
+            app:strokeWidth="2dp" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
