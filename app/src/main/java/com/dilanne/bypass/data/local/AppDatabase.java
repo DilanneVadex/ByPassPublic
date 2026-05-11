@@ -15,17 +15,22 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract PasswordDao passwordDao();
 
-    public static AppDatabase getDatabase(final Context context) {
+    public static AppDatabase getDatabase(final Context context, String userId) {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
+                    String dbName = (userId == null || userId.isEmpty()) ? "vaultpass_database" : "vaultpass_database_" + userId;
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDatabase.class, "vaultpass_database")
+                                    AppDatabase.class, dbName)
                             .fallbackToDestructiveMigration()
                             .build();
                 }
             }
         }
         return INSTANCE;
+    }
+
+    public static void destroyInstance() {
+        INSTANCE = null;
     }
 }

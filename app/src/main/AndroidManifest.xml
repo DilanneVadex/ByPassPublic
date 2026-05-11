@@ -58,6 +58,12 @@
         <activity
             android:name=".ui.activities.LanguageActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.PinActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

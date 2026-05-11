@@ -55,4 +55,7 @@
     <string name="lang_german">German</string>
     <string name="lang_russian">Russian</string>
     <string name="btn_confirm">Confirm</string>
+
+    <!-- TODO: Replace with your actual Web Client ID from Google Cloud Console -->
+    <string name="default_web_client_id" translatable="false">645290432896-sfvobs9e7sr9d2ir5dvg4hc88f0ej58g.apps.googleusercontent.com</string>
 </resources>

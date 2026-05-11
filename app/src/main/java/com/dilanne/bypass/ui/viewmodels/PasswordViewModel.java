@@ -40,4 +40,8 @@ public class PasswordViewModel extends AndroidViewModel {
     public String decryptPassword(String encrypted) {
         return repository.decryptPassword(encrypted);
     }
+
+    public void syncFromRemote() {
+        repository.syncFromRemote();
+    }
 }

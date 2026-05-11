@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "645290432896",
+    "project_id": "bypass-3309f",
+    "storage_bucket": "bypass-3309f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645290432896:android:850805bfb936ab1a100965",
+        "android_client_info": {
+          "package_name": "com.dilanne.bypass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645290432896-cgk32vplphg2a85ajfemsis0nnffh4a6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dilanne.bypass",
+            "certificate_hash": "1e99dce37a6838db9ea6e73d57401c2e51f4b7b7"
+          }
+        },
+        {
+          "client_id": "645290432896-sfvobs9e7sr9d2ir5dvg4hc88f0ej58g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlS77QLyAyyiMfjiPFeehpdTwOB5kXGqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645290432896-sfvobs9e7sr9d2ir5dvg4hc88f0ej58g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
 
+        // Sync data from Firebase
+        viewModel.syncFromRemote();
+
         setupRecyclerViews();
         setupSearch();
         observeViewModel();

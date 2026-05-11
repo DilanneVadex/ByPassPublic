@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface PasswordDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(PasswordEntry password);
+    long insert(PasswordEntry password);
 
     @Update
     void update(PasswordEntry password);
