@@ -1,5 +1,6 @@
 package com.dilanne.bypass.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
+import com.dilanne.bypass.R;
 import com.dilanne.bypass.auth.AuthManager;
 import com.dilanne.bypass.databinding.ActivityLoginBinding;
+import com.dilanne.bypass.util.LocaleHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
@@ -25,6 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences encryptedPrefs;
     private static final int RC_SIGN_IN = 9001;
     private static final String PREF_PIN = "user_pin";
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = binding.etPassword.getText().toString().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Veuillez remplir les champs", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.hint_email), Toast.LENGTH_SHORT).show();
             return;
         }
 

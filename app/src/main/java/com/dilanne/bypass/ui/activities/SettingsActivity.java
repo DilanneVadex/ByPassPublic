@@ -1,15 +1,22 @@
 package com.dilanne.bypass.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.databinding.ActivitySettingsBinding;
+import com.dilanne.bypass.util.LocaleHelper;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private ActivitySettingsBinding binding;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +99,16 @@ public class SettingsActivity extends AppCompatActivity {
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_generator) {
+                Intent intent = new Intent(this, GeneratorActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            } else if (itemId == R.id.nav_security) {
+                Intent intent = new Intent(this, SecurityActivity.class);
+                startActivity(intent);
                 finish();
                 return true;
             }

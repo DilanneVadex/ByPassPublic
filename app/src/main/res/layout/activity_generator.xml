@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background2"
+    android:background="@drawable/background1_black"
     tools:context=".ui.activities.GeneratorActivity">
 
     <!-- Header -->
@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/keania_one"
-        android:text="Generator"
-        android:textColor="@color/primary"
+        android:text="@string/title_generator"
+        android:textColor="@color/white"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lobster"
                     android:text="Lucas Martin"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <TextView
@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="user@gmail.com"
-                    android:textColor="@color/primary_40"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -126,7 +126,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 app:cardBackgroundColor="@color/primary_20"
-                app:cardCornerRadius="16dp">
+                app:cardCornerRadius="16dp"
+                app:strokeColor="@color/primary"
+                app:strokeWidth="1.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,28 +136,36 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <RelativeLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:gravity="center|start">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Password Length"
+                            android:gravity="center"
+                            android:text="@string/label_password_length"
                             android:textColor="@color/secondary"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tvLengthValue"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:background="@drawable/bg_security_score"
                             android:backgroundTint="@color/secondary"
+                            android:fontFamily="@font/lobster"
                             android:gravity="center"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="15dp"
                             android:text="12"
-                            android:textColor="@color/white" />
-                    </RelativeLayout>
+                            android:textColor="@color/white"
+                            app:layout_constraintEnd_toEndOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <com.google.android.material.slider.Slider
                         android:id="@+id/sliderLength"
@@ -163,11 +173,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:value="12"
-                        android:valueFrom="4"
+                        android:valueFrom="8"
                         android:valueTo="32"
                         app:thumbColor="@color/primary"
                         app:trackColorActive="@color/primary"
-                        app:trackColorInactive="@color/secondary_40" />
+                        app:trackColorInactive="@color/secondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -198,7 +208,7 @@
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/primary"
                 android:fontFamily="@font/lobster"
-                android:text="Generate Password"
+                android:text="@string/btn_generate"
                 android:textAllCaps="false"
                 android:textSize="20sp"
                 app:cornerRadius="16dp" />
@@ -216,7 +226,7 @@
                     android:layout_height="60dp"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/secondary_36"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="12dp"
                     app:strokeColor="@color/secondary"
                     app:strokeWidth="1dp">
@@ -228,7 +238,7 @@
                         android:gravity="center_vertical"
                         android:paddingHorizontal="16dp"
                         android:text="Password123!"
-                        android:textColor="@color/primary"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -237,7 +247,8 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     app:cardBackgroundColor="@color/secondary"
-                    app:cardCornerRadius="12dp">
+                    app:cardCornerRadius="12dp"
+                    app:strokeWidth="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -248,13 +259,13 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/edit_box_fill"
+                            android:src="@drawable/file_copy_fill"
                             app:tint="@color/white" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Copy"
+                            android:text="@string/label_copy"
                             android:textColor="@color/white"
                             android:textSize="10sp" />
                     </LinearLayout>

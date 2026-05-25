@@ -1,14 +1,18 @@
 package com.dilanne.bypass.ui.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.dilanne.bypass.R;
 import com.dilanne.bypass.databinding.ActivityAddAccountBinding;
 import com.dilanne.bypass.models.PasswordEntry;
 import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
+import com.dilanne.bypass.util.LocaleHelper;
 
 public class AddAccountActivity extends AppCompatActivity {
 
@@ -17,6 +21,11 @@ public class AddAccountActivity extends AppCompatActivity {
     private ActivityAddAccountBinding binding;
     private PasswordViewModel viewModel;
     private PasswordEntry editingEntry;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +50,13 @@ public class AddAccountActivity extends AppCompatActivity {
     }
 
     private void setupAddMode() {
-        binding.tvTitle.setText("Add Account");
+        binding.tvTitle.setText(R.string.title_add_account);
     }
 
     private void setupEditMode() {
-        binding.tvTitle.setText(editingEntry.getTitle() + " Edit Account");
+        binding.tvTitle.setText(getString(R.string.title_edit_account_header, editingEntry.getTitle()));
         binding.etUrl.setText(editingEntry.getUrl());
-        binding.etLogin.setText(editingEntry.getEmail()); // In this app email/login seem interchangeable in fields
+        binding.etLogin.setText(editingEntry.getEmail()); 
         
         String decrypted = viewModel.decryptPassword(editingEntry.getEncryptedPassword());
         binding.etPassword.setText(decrypted);
@@ -74,11 +83,41 @@ public class AddAccountActivity extends AppCompatActivity {
     private void updatePreview() {
         String url = binding.etUrl.getText().toString().trim();
         String login = binding.etLogin.getText().toString().trim();
-        
+
         String displayUrl = url.isEmpty() ? (editingEntry != null ? editingEntry.getTitle() : "Service") : url;
         String displayMail = login.isEmpty() ? (editingEntry != null ? editingEntry.getEmail() : "email") : login;
-        
+
         binding.tvPreview.setText(displayUrl + " • " + displayMail);
+
+        // Mise à jour de l'icône en temps réel
+        String faviconUrl = "";
+        if (!url.isEmpty()) {
+            faviconUrl = "https://icons.duckduckgo.com/ip3/" + extractDomain(url) + ".ico";
+        } else if (editingEntry != null && editingEntry.getUrl() != null) {
+            faviconUrl = "https://icons.duckduckgo.com/ip3/" + extractDomain(editingEntry.getUrl()) + ".ico";
+        }
+
+        Glide.with(this)
+                .load(faviconUrl)
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
+                .into(binding.ivServiceIcon);
+    }
+
+    private String extractDomain(String url) {
+        try {
+            if (!url.startsWith("http")) {
+                url = "https://" + url;
+            }
+            java.net.URI uri = new java.net.URI(url);
+            String domain = uri.getHost();
+            if (domain != null) {
+                return domain.startsWith("www.") ? domain.substring(4) : domain;
+            }
+        } catch (Exception e) {
+            return url;
+        }
+        return url;
     }
 
     private void handleSave() {
@@ -87,7 +126,7 @@ public class AddAccountActivity extends AppCompatActivity {
         String password = binding.etPassword.getText().toString().trim();
 
         if (url.isEmpty() || login.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_fill_required, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -112,10 +151,10 @@ public class AddAccountActivity extends AppCompatActivity {
 
         if (editingEntry != null) {
             viewModel.update(entry, password);
-            Toast.makeText(this, "Account updated successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_account_updated, Toast.LENGTH_SHORT).show();
         } else {
             viewModel.insert(entry, password);
-            Toast.makeText(this, "Account added successfully!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_account_added, Toast.LENGTH_SHORT).show();
         }
         finish();
     }

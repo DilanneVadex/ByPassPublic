@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background1"
+    android:background="@drawable/background1_black"
     tools:context=".ui.activities.PinActivity">
 
     <ImageView
@@ -24,7 +24,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/keania_one"
         android:text="Entrez votre PIN"
-        android:textColor="@color/vp_purple_title"
+        android:textColor="@color/white"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
         android:layout_marginEnd="40dp"
         android:gravity="center"
         android:text="Pour sécuriser vos données locales"
-        android:textColor="@color/primary_40"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPinTitle" />
@@ -56,7 +56,8 @@
         android:maxLength="4"
         android:letterSpacing="0.5"
         android:textSize="24sp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPinSubtitle" />
@@ -70,10 +71,12 @@
         android:layout_marginEnd="40dp"
         android:backgroundTint="@color/primary_40"
         android:text="Valider"
-        app:cornerRadius="25dp"
+        app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPin" />
+        app:layout_constraintTop_toBottomOf="@id/etPin"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp"/>
 
     <TextView
         android:id="@+id/tvLogout"
@@ -81,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="Se déconnecter"
-        android:textColor="@color/vp_purple_title"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

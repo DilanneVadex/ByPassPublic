@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Label"
-            android:textColor="@color/primary"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <ImageView
@@ -26,7 +26,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/pencil_fill"
+            android:src="@drawable/edit_box_fill"
             app:tint="@color/secondary" />
     </RelativeLayout>
 
@@ -38,7 +38,7 @@
         android:fontFamily="@font/inter"
         android:paddingTop="4dp"
         android:text="Value"
-        android:textColor="@color/primary"
+        android:textColor="@color/secondary"
         android:textSize="16sp" />
 
     <View

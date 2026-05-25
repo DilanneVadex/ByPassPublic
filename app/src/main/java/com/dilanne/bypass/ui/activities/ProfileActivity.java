@@ -1,5 +1,6 @@
 package com.dilanne.bypass.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,18 +9,30 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.databinding.ActivityProfileBinding;
+import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
+import com.dilanne.bypass.util.LocaleHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private ActivityProfileBinding binding;
+    private PasswordViewModel viewModel;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
 
         setupFields();
         setupActions();
@@ -61,19 +74,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setupFields() {
         // Name Field
-        setupInputRow(binding.fieldName.getRoot(), "Name", "Lucas martin");
+        setupInputRow(binding.fieldName.getRoot(), getString(R.string.label_name), "Lucas martin");
         
         // Mail Field
-        setupInputRow(binding.fieldMail.getRoot(), "Mail", "Lucasmartin@gmail.com");
+        setupInputRow(binding.fieldMail.getRoot(), getString(R.string.label_mail), "Lucasmartin@gmail.com");
         
         // Password Field
-        setupInputRow(binding.fieldPassword.getRoot(), "Password", "••••••••");
+        setupInputRow(binding.fieldPassword.getRoot(), getString(R.string.label_password_current), "••••••••");
         
         // New Password Field
-        setupInputRow(binding.fieldNewPassword.getRoot(), "New Password", "");
+        setupInputRow(binding.fieldNewPassword.getRoot(), getString(R.string.label_new_password), "");
         
         // Confirm Password Field
-        setupInputRow(binding.fieldConfirmPassword.getRoot(), "Confirm Password", "");
+        setupInputRow(binding.fieldConfirmPassword.getRoot(), getString(R.string.label_confirm_password), "");
     }
 
     private void setupInputRow(View root, String label, String value) {
@@ -88,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
         binding.btnBack.setOnClickListener(v -> finish());
 
         binding.btnConfirm.setOnClickListener(v -> {
-            Toast.makeText(this, "Profile Updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_profile_updated), Toast.LENGTH_SHORT).show();
             finish();
         });
 
@@ -99,7 +112,8 @@ public class ProfileActivity extends AppCompatActivity {
         });
         
         binding.btnSync.setOnClickListener(v -> {
-            Toast.makeText(this, "Syncing data...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_syncing_cloud), Toast.LENGTH_SHORT).show();
+            viewModel.syncFromRemote();
         });
     }
 }

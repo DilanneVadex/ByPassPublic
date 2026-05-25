@@ -1,5 +1,6 @@
 package com.dilanne.bypass;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,11 +19,13 @@ import com.dilanne.bypass.models.Category;
 import com.dilanne.bypass.models.PasswordEntry;
 import com.dilanne.bypass.ui.activities.AddAccountActivity;
 import com.dilanne.bypass.ui.adapters.CategoryAdapter;
-import com.dilanne.bypass.ui.adapters.FavorisAdapter;
 import com.dilanne.bypass.ui.adapters.PasswordAdapter;
+import com.dilanne.bypass.ui.adapters.RecentAdapter;
 import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
+import com.dilanne.bypass.util.LocaleHelper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,11 +34,17 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private PasswordViewModel viewModel;
     private PasswordAdapter passwordAdapter;
-    private FavorisAdapter favorisAdapter;
+    private RecentAdapter recentAdapter;
     private CategoryAdapter categoryAdapter;
 
     private final MutableLiveData<String> searchQuery = new MutableLiveData<>("");
+    private final MutableLiveData<String> selectedCategory = new MutableLiveData<>("");
     private final MediatorLiveData<List<PasswordEntry>> filteredPasswords = new MediatorLiveData<>();
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,14 @@ public class MainActivity extends AppCompatActivity {
         observeViewModel();
         setupBottomNav();
         setupFab();
+        setupMenu();
+    }
+
+    private void setupMenu() {
+        binding.btnMenu.setOnClickListener(v -> {
+            Intent intent = new Intent(this, com.dilanne.bypass.ui.activities.SettingsActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setupFab() {
@@ -101,7 +118,13 @@ public class MainActivity extends AppCompatActivity {
         categories.add(new Category(getString(R.string.cat_bank), R.drawable.bank_card_fill));
         categories.add(new Category(getString(R.string.cat_shopping), R.drawable.shopping_cart_2_fill));
         
-        categoryAdapter = new CategoryAdapter(categories);
+        categoryAdapter = new CategoryAdapter(categories, category -> {
+            if (category == null) {
+                selectedCategory.setValue("");
+            } else {
+                selectedCategory.setValue(category.getName());
+            }
+        });
         binding.rvCategories.setAdapter(categoryAdapter);
 
         // Passwords List (Vertical)
@@ -113,44 +136,74 @@ public class MainActivity extends AppCompatActivity {
         binding.rvPasswords.setLayoutManager(new LinearLayoutManager(this));
         binding.rvPasswords.setAdapter(passwordAdapter);
 
-        // Favoris List (Horizontal)
-        favorisAdapter = new FavorisAdapter(this::handleItemClick);
+        // Recent List (Horizontal)
+        recentAdapter = new RecentAdapter(this::handleItemClick);
         binding.rvFavoris.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        binding.rvFavoris.setAdapter(favorisAdapter);
+        binding.rvFavoris.setAdapter(recentAdapter);
     }
 
     private void observeViewModel() {
         filteredPasswords.addSource(viewModel.getAllPasswords(), passwords -> {
-            filterAndPopulate(passwords, searchQuery.getValue());
+            filterAndPopulate(passwords, searchQuery.getValue(), selectedCategory.getValue());
         });
 
         filteredPasswords.addSource(searchQuery, query -> {
-            filterAndPopulate(viewModel.getAllPasswords().getValue(), query);
+            filterAndPopulate(viewModel.getAllPasswords().getValue(), query, selectedCategory.getValue());
+        });
+
+        filteredPasswords.addSource(selectedCategory, category -> {
+            filterAndPopulate(viewModel.getAllPasswords().getValue(), searchQuery.getValue(), category);
         });
 
         filteredPasswords.observe(this, passwords -> {
             passwordAdapter.submitList(passwords);
-            
-            // Update Favoris based on the full list (or filtered if preferred)
-            List<PasswordEntry> favoris = passwords.stream()
-                    .filter(PasswordEntry::isFavorite)
-                    .collect(Collectors.toList());
-            favorisAdapter.submitList(favoris);
+        });
+
+        viewModel.getAllPasswords().observe(this, passwords -> {
+            if (passwords != null) {
+                // Update Recent based on lastModified timestamp
+                List<PasswordEntry> recent = passwords.stream()
+                        .sorted(Comparator.comparingLong(PasswordEntry::getLastModified).reversed())
+                        .limit(5) // Show top 5 recent
+                        .collect(Collectors.toList());
+                recentAdapter.submitList(recent);
+            }
         });
     }
 
-    private void filterAndPopulate(List<PasswordEntry> passwords, String query) {
+    private void filterAndPopulate(List<PasswordEntry> passwords, String query, String category) {
         if (passwords == null) return;
-        if (query == null || query.isEmpty()) {
-            filteredPasswords.setValue(passwords);
-        } else {
-            String lowerQuery = query.toLowerCase();
-            List<PasswordEntry> filtered = passwords.stream()
-                    .filter(p -> p.getTitle().toLowerCase().contains(lowerQuery) || 
-                                 p.getEmail().toLowerCase().contains(lowerQuery))
-                    .collect(Collectors.toList());
-            filteredPasswords.setValue(filtered);
-        }
+        
+        boolean isSearchingText = (query != null && !query.isEmpty());
+        updateUIForSearch(isSearchingText);
+
+        List<PasswordEntry> filtered = passwords.stream()
+                .filter(p -> {
+                    boolean matchesQuery = true;
+                    if (query != null && !query.isEmpty()) {
+                        String lowerQuery = query.toLowerCase();
+                        matchesQuery = p.getTitle().toLowerCase().contains(lowerQuery) || 
+                                       p.getEmail().toLowerCase().contains(lowerQuery);
+                    }
+                    
+                    boolean matchesCategory = true;
+                    if (category != null && !category.isEmpty()) {
+                        matchesCategory = category.equalsIgnoreCase(p.getCategory());
+                    }
+                    
+                    return matchesQuery && matchesCategory;
+                })
+                .collect(Collectors.toList());
+        
+        filteredPasswords.setValue(filtered);
+    }
+
+    private void updateUIForSearch(boolean isSearching) {
+        int visibility = isSearching ? View.GONE : View.VISIBLE;
+        binding.sectionSecurity.setVisibility(visibility);
+        binding.sectionRecent.setVisibility(visibility);
+        binding.sectionCategories.setVisibility(visibility);
+        binding.sectionPasswordLabel.setVisibility(visibility);
     }
 
     private void handleTogglePassword(PasswordEntry entry, PasswordAdapter.PasswordViewHolder holder) {

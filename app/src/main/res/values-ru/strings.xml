@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VaultPass</string>
+    <string name="title_vaultpass">VaultPass</string>
+    <string name="subtitle_secured">Ваши пароли. В безопасности.</string>
+    <string name="hint_email">Введите адрес электронной почты</string>
+    <string name="hint_password">Введите ваш пароль</string>
+    <string name="error_fill_fields">Пожалуйста, заполните все поля</string>
+    <string name="error_passwords_dont_match">Пароли не совпадают</string>
+    <string name="registration_success">Аккаунт создан!</string>
+    <string name="btn_login">Авторизоваться</string>
+    <string name="or_login_with">Или войти через</string>
+    <string name="sign_in_google">Войти через Google</string>
+    <string name="sign_in_github">Войти через Github</string>
+    <string name="btn_logout">Выйти</string>
+
+    <!-- Home Screen -->
+    <string name="title_password_vault">Хранилище паролей</string>
+    <string name="hint_search">Поиск…</string>
+    <string name="label_security_score">Оценка безопасности</string>
+    <string name="value_security_score">82% Безопасно</string>
+    <string name="label_recent">Недавние</string>
+    <string name="label_categories">Категории</string>
+    <string name="label_password">пароль</string>
+
+    <!-- Categories -->
+    <string name="cat_social">Соцсети</string>
+    <string name="cat_work">Работа</string>
+    <string name="cat_bank">Банк</string>
+    <string name="cat_shopping">Покупки</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">Главная</string>
+    <string name="nav_generator">Генератор</string>
+    <string name="nav_security">Безопасность</string>
+    <string name="nav_settings">Настройки</string>
+
+    <!-- Profile Screen -->
+    <string name="title_profile">Мой профиль</string>
+    <string name="label_name">Имя</string>
+    <string name="label_mail">Почта</string>
+    <string name="label_password_current">Пароль</string>
+    <string name="label_new_password">Новый пароль</string>
+    <string name="label_confirm_password">Подтвердите пароль</string>
+    <string name="btn_confirm_password">Подтвердить изменение</string>
+    <string name="account_details_header">Аккаунт %1$s</string>
+    <string name="btn_edit">Изменить</string>
+    <string name="btn_delete">Удалить</string>
+    <string name="delete_confirmation_title">Удалить аккаунт</string>
+    <string name="delete_confirmation_message">Вы уверены, что хотите удалить этот аккаунт?</string>
+    <string name="copied_to_clipboard">%1$s скопировано в буфер обмена</string>
+    <string name="label_login_prefix">Логин: </string>
+    <string name="label_password_prefix">Пароль: </string>
+    <string name="btn_delete_caps">УДАЛИТЬ</string>
+    <string name="btn_edit_caps">ИЗМЕНИТЬ</string>
+    <string name="toast_account_deleted">Аккаунт удален</string>
+    <string name="title_add_account">Добавить аккаунт</string>
+    <string name="title_edit_account_header">Изменить аккаунт %1$s</string>
+    <string name="error_fill_required">Пожалуйста, заполните все обязательные поля</string>
+    <string name="toast_account_updated">Аккаунт успешно обновлен!</string>
+    <string name="toast_account_added">Аккаунт успешно добавлен!</string>
+    <string name="hint_url">URL / Сервис</string>
+    <string name="label_cancel">Отмена</string>
+    <string name="title_generator">Генератор</string>
+    <string name="label_password_length">Длина пароля</string>
+    <string name="btn_generate">Сгенерировать пароль</string>
+    <string name="label_copy">Копировать</string>
+    <string name="toast_pass_copied">Пароль скопирован!</string>
+    <string name="error_select_option">Пожалуйста, выберите хотя бы один вариант</string>
+    <string name="toast_scanning">Сканирование %1$d паролей...</string>
+    <string name="error_no_pass_to_scan">Нет паролей для сканирования</string>
+    <string name="label_scan">СКАНИРОВАТЬ</string>
+    <string name="strength_unknown">НЕИЗВЕСТНО</string>
+    <string name="strength_weak">СЛАБЫЙ</string>
+    <string name="strength_medium">СРЕДНИЙ</string>
+    <string name="strength_strong">СИЛЬНЫЙ</string>
+    <string name="status_compromised">Скомпрометирован</string>
+    <string name="status_secure">БЕЗОПАСНО</string>
+    <string name="status_error">Ошибка</string>
+    <string name="status_analyzing">Анализ...</string>
+    <string name="status_checking">Проверка...</string>
+    <string name="status_pending">В ОЖИДАНИИ</string>
+    <string name="toast_profile_updated">Профиль обновлен</string>
+    <string name="toast_syncing_cloud">Синхронизация данных из облака...</string>
+    <string name="btn_scan_compromised">Сканировать скомпрометированные пароли</string>
+    <string name="title_security_dashboard">Панель безопасности</string>
+    <string name="label_about_us">О нас</string>
+    <string name="label_made_by">Сделано Диланном</string>
+    <string name="label_support">Поддержка</string>
+    <string name="label_no_service">Сервис недоступен</string>
+    <string name="label_upper">Заглавные (A-Z)</string>
+    <string name="label_lower">Строчные (a-z)</string>
+    <string name="label_numbers">Цифры (0-9)</string>
+    <string name="label_symbols">Символы (#&amp;@!)</string>
+
+    <!-- Language Screen -->
+    <string name="title_language">Язык</string>
+    <string name="lang_english">Английский</string>
+    <string name="lang_french">Французский</string>
+    <string name="lang_german">Немецкий</string>
+    <string name="lang_russian">Русский</string>
+    <string name="btn_confirm">Подтвердить</string>
+    <!-- PIN Screen -->
+    <string name="title_pin_setup">Установите ваш PIN-код</string>
+    <string name="subtitle_pin_setup">Выберите 4-значный код для защиты ваших данных</string>
+    <string name="title_pin_entry">Введите ваш PIN-код</string>
+    <string name="subtitle_pin_entry">Безопасный доступ</string>
+    <string name="error_pin_length">PIN-код должен состоять из 4 цифр</string>
+    <string name="pin_setup_success">PIN-код успешно настроен!</string>
+    <string name="error_invalid_pin">Неверный PIN-код</string>
+    <string name="label_logout">Выйти</string>
+</resources>

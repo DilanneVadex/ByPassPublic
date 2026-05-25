@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VaultPass</string>
+    <string name="title_vaultpass">VaultPass</string>
+    <string name="subtitle_secured">Ihre Passwörter. Gesichert.</string>
+    <string name="hint_email">E-Mail eingeben</string>
+    <string name="hint_password">Passwort eingeben</string>
+    <string name="error_fill_fields">Bitte füllen Sie alle Felder aus</string>
+    <string name="error_passwords_dont_match">Passwörter stimmen nicht überein</string>
+    <string name="registration_success">Konto erstellt!</string>
+    <string name="btn_login">Einloggen</string>
+    <string name="or_login_with">Oder anmelden mit</string>
+    <string name="sign_in_google">Mit Google anmelden</string>
+    <string name="sign_in_github">Mit Github anmelden</string>
+    <string name="btn_logout">Abmelden</string>
+
+    <!-- Home Screen -->
+    <string name="title_password_vault">Passwort-Tresor</string>
+    <string name="hint_search">Suchen…</string>
+    <string name="label_security_score">Sicherheitsbewertung</string>
+    <string name="value_security_score">82% Sicher</string>
+    <string name="label_recent">Aktuell</string>
+    <string name="label_categories">Kategorien</string>
+    <string name="label_password">Passwort</string>
+
+    <!-- Categories -->
+    <string name="cat_social">Soziales</string>
+    <string name="cat_work">Arbeit</string>
+    <string name="cat_bank">Bank</string>
+    <string name="cat_shopping">Einkaufen</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">Start</string>
+    <string name="nav_generator">Generator</string>
+    <string name="nav_security">Sicherheit</string>
+    <string name="nav_settings">Einstellungen</string>
+
+    <!-- Profile Screen -->
+    <string name="title_profile">Mein Konto</string>
+    <string name="label_name">Name</string>
+    <string name="label_mail">E-Mail</string>
+    <string name="label_password_current">Passwort</string>
+    <string name="label_new_password">Neues Passwort</string>
+    <string name="label_confirm_password">Passwort bestätigen</string>
+    <string name="btn_confirm_password">Passwort bestätigen</string>
+    <string name="account_details_header">%1$s Konto</string>
+    <string name="btn_edit">Bearbeiten</string>
+    <string name="btn_delete">Löschen</string>
+    <string name="delete_confirmation_title">Konto löschen</string>
+    <string name="delete_confirmation_message">Sind Sie sicher, dass Sie dieses Konto löschen möchten?</string>
+    <string name="copied_to_clipboard">%1$s in die Zwischenablage kopiert</string>
+    <string name="label_login_prefix">Login: </string>
+    <string name="label_password_prefix">Passwort: </string>
+    <string name="btn_delete_caps">LÖSCHEN</string>
+    <string name="btn_edit_caps">BEARBEITEN</string>
+    <string name="toast_account_deleted">Konto gelöscht</string>
+    <string name="title_add_account">Konto hinzufügen</string>
+    <string name="title_edit_account_header">%1$s Konto bearbeiten</string>
+    <string name="error_fill_required">Bitte füllen Sie alle erforderlichen Felder aus</string>
+    <string name="toast_account_updated">Konto erfolgreich aktualisiert!</string>
+    <string name="toast_account_added">Konto erfolgreich hinzugefügt!</string>
+    <string name="hint_url">URL / Dienst</string>
+    <string name="label_cancel">Abbrechen</string>
+    <string name="title_generator">Generator</string>
+    <string name="label_password_length">Passwortlänge</string>
+    <string name="btn_generate">Passwort generieren</string>
+    <string name="label_copy">Kopieren</string>
+    <string name="toast_pass_copied">Passwort kopiert!</string>
+    <string name="error_select_option">Bitte wählen Sie mindestens eine Option</string>
+    <string name="toast_scanning">Scannen von %1$d Passwörtern...</string>
+    <string name="error_no_pass_to_scan">Keine Passwörter zum Scannen</string>
+    <string name="label_scan">SCANNEN</string>
+    <string name="strength_unknown">UNBEKANNT</string>
+    <string name="strength_weak">SCHWACH</string>
+    <string name="strength_medium">MITTEL</string>
+    <string name="strength_strong">STARK</string>
+    <string name="status_compromised">Gefährdet</string>
+    <string name="status_secure">SICHER</string>
+    <string name="status_error">Fehler</string>
+    <string name="status_analyzing">Analysiere...</string>
+    <string name="status_checking">Prüfe...</string>
+    <string name="status_pending">AUSSTEHEND</string>
+    <string name="toast_profile_updated">Profil aktualisiert</string>
+    <string name="toast_syncing_cloud">Daten aus der Cloud synchronisieren...</string>
+    <string name="btn_scan_compromised">Gefährdete Passwörter scannen</string>
+    <string name="title_security_dashboard">Sicherheits-Dashboard</string>
+    <string name="label_about_us">Über uns</string>
+    <string name="label_made_by">Erstellt von Dilanne</string>
+    <string name="label_support">Support</string>
+    <string name="label_no_service">Kein Service verfügbar</string>
+    <string name="label_upper">Großbuchstaben (A-Z)</string>
+    <string name="label_lower">Kleinbuchstaben (a-z)</string>
+    <string name="label_numbers">Zahlen (0-9)</string>
+    <string name="label_symbols">Symbole (#&amp;@!)</string>
+
+    <!-- Language Screen -->
+    <string name="title_language">Sprache</string>
+    <string name="lang_english">Englisch</string>
+    <string name="lang_french">Französisch</string>
+    <string name="lang_german">Deutsch</string>
+    <string name="lang_russian">Russisch</string>
+    <string name="btn_confirm">Bestätigen</string>
+    <!-- PIN Screen -->
+    <string name="title_pin_setup">PIN festlegen</string>
+    <string name="subtitle_pin_setup">Wählen Sie einen 4-stelligen Code, um Ihre Daten zu schützen</string>
+    <string name="title_pin_entry">PIN eingeben</string>
+    <string name="subtitle_pin_entry">Sicherer Zugriff</string>
+    <string name="error_pin_length">Die PIN muss 4 Ziffern enthalten</string>
+    <string name="pin_setup_success">PIN erfolgreich konfiguriert!</string>
+    <string name="error_invalid_pin">Falsche PIN</string>
+    <string name="label_logout">Abmelden</string>
+</resources>

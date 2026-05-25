@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.databinding.ItemPasswordBinding;
 import com.dilanne.bypass.models.PasswordEntry;
@@ -80,6 +81,19 @@ public class PasswordAdapter extends ListAdapter<PasswordEntry, PasswordAdapter.
             binding.tvMaskedPassword.setText("••••••••");
             binding.tvMaskedPassword.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             binding.ivToggleVisibility.setImageResource(R.drawable.eye_close_line);
+
+            // Charger l'icône du site web avec Glide
+            String faviconUrl = "";
+            if (entry.getUrl() != null && !entry.getUrl().isEmpty()) {
+                // Utilisation de l'API DuckDuckGo ou Google pour récupérer le favicon
+                faviconUrl = "https://icons.duckduckgo.com/ip3/" + extractDomain(entry.getUrl()) + ".ico";
+            }
+
+            Glide.with(binding.ivServiceLogo.getContext())
+                    .load(faviconUrl)
+                    .placeholder(R.drawable.logo)
+                    .error(R.drawable.logo)
+                    .into(binding.ivServiceLogo);
             
             binding.ivToggleVisibility.setOnClickListener(v -> {
                 isVisible = !isVisible;
@@ -99,6 +113,22 @@ public class PasswordAdapter extends ListAdapter<PasswordEntry, PasswordAdapter.
         
         public boolean isPasswordVisible() {
             return isVisible;
+        }
+
+        private String extractDomain(String url) {
+            try {
+                if (!url.startsWith("http")) {
+                    url = "https://" + url;
+                }
+                java.net.URI uri = new java.net.URI(url);
+                String domain = uri.getHost();
+                if (domain != null) {
+                    return domain.startsWith("www.") ? domain.substring(4) : domain;
+                }
+            } catch (Exception e) {
+                return url;
+            }
+            return url;
         }
     }
 }

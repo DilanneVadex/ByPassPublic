@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background2"
+    android:background="@drawable/background2_black"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -47,7 +47,7 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/keania_one"
                     android:text="@string/title_language"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/white"
                     android:textSize="32sp" />
             </LinearLayout>
         </RelativeLayout>
@@ -78,7 +78,7 @@
                     android:drawableTint="@color/secondary"
                     android:padding="16dp"
                     android:text="@string/lang_english"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -101,7 +101,7 @@
                     android:drawableTint="@color/secondary"
                     android:padding="16dp"
                     android:text="@string/lang_french"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -124,7 +124,7 @@
                     android:drawableTint="@color/secondary"
                     android:padding="16dp"
                     android:text="@string/lang_german"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -147,7 +147,7 @@
                     android:drawableTint="@color/secondary"
                     android:padding="16dp"
                     android:text="@string/lang_russian"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/white"
                     android:textSize="18sp" />
             </com.google.android.material.card.MaterialCardView>
 

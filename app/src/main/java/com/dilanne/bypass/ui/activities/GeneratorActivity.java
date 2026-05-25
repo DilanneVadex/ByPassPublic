@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dilanne.bypass.MainActivity;
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.databinding.ActivityGeneratorBinding;
+import com.dilanne.bypass.util.LocaleHelper;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ public class GeneratorActivity extends AppCompatActivity {
     private static final String SYMBOLS = "#&@!$*-+?_";
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityGeneratorBinding.inflate(getLayoutInflater());
@@ -40,10 +46,10 @@ public class GeneratorActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-        binding.switchUpper.tvLabel.setText("Include Uppercase (A-Z)");
-        binding.switchLower.tvLabel.setText("Include Lowercase (a-z)");
-        binding.switchNumbers.tvLabel.setText("Include Numbers (0-9)");
-        binding.switchSymbols.tvLabel.setText("Include Symbols (#&@!)");
+        binding.switchUpper.tvLabel.setText(R.string.label_upper);
+        binding.switchLower.tvLabel.setText(R.string.label_lower);
+        binding.switchNumbers.tvLabel.setText(R.string.label_numbers);
+        binding.switchSymbols.tvLabel.setText(R.string.label_symbols);
 
         binding.sliderLength.addOnChangeListener((slider, value, fromUser) -> {
             binding.tvLengthValue.setText(String.valueOf((int) value));
@@ -60,7 +66,7 @@ public class GeneratorActivity extends AppCompatActivity {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Generated Password", password);
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(this, "Password copied to clipboard", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_pass_copied, Toast.LENGTH_SHORT).show();
         });
 
         binding.bottomNavigation.setSelectedItemId(R.id.nav_generator);
@@ -114,7 +120,7 @@ public class GeneratorActivity extends AppCompatActivity {
         }
 
         if (characterPool.length() == 0) {
-            Toast.makeText(this, "Please select at least one option", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_select_option, Toast.LENGTH_SHORT).show();
             return;
         }
 

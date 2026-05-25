@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background2">
+    android:background="@drawable/background2_black">
 
     <!-- Header -->
     <RelativeLayout
@@ -41,8 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/keania_one"
-                android:text="Support"
-                android:textColor="@color/primary"
+                android:text="@string/label_support"
+                android:textColor="@color/white"
                 android:textSize="32sp" />
         </LinearLayout>
     </RelativeLayout>
@@ -56,7 +56,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header">
+        app:layout_constraintTop_toBottomOf="@+id/header">
 
         <ImageView
             android:layout_width="120dp"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/lobster"
-            android:text="Aucun service"
+            android:text="@string/label_no_service"
             android:textColor="@color/secondary"
             android:textSize="36sp" />
     </LinearLayout>

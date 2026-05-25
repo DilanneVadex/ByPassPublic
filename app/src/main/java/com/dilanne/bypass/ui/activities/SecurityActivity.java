@@ -1,5 +1,6 @@
 package com.dilanne.bypass.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.dilanne.bypass.databinding.ActivitySecurityBinding;
 import com.dilanne.bypass.models.PasswordEntry;
 import com.dilanne.bypass.ui.adapters.SecurityAdapter;
 import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
+import com.dilanne.bypass.util.LocaleHelper;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -35,6 +37,11 @@ public class SecurityActivity extends AppCompatActivity {
     private SecurityAdapter adapter;
     private HibpService hibpService;
     private Nbvcxz nbvcxz;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +105,11 @@ public class SecurityActivity extends AppCompatActivity {
     private void scanAllPasswords() {
         List<PasswordEntry> passwords = adapter.getPasswords();
         if (passwords.isEmpty()) {
-            Toast.makeText(this, "No passwords to scan", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_no_pass_to_scan), Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Toast.makeText(this, "Scanning " + passwords.size() + " passwords...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.toast_scanning, passwords.size()), Toast.LENGTH_SHORT).show();
 
         for (int i = 0; i < passwords.size(); i++) {
             analyzePassword(i, passwords.get(i));
@@ -111,20 +118,30 @@ public class SecurityActivity extends AppCompatActivity {
 
     private void analyzePassword(int position, PasswordEntry entry) {
         String plainPassword = viewModel.decryptPassword(entry.getEncryptedPassword());
-        SecurityAdapter.PasswordSecurityInfo info = new SecurityAdapter.PasswordSecurityInfo();
+        if (plainPassword == null) {
+            SecurityAdapter.PasswordSecurityInfo info = new SecurityAdapter.PasswordSecurityInfo(this);
+            info.strength = getString(R.string.strength_unknown);
+            info.strengthColor = Color.GRAY;
+            info.status = getString(R.string.status_error);
+            info.statusColor = Color.GRAY;
+            adapter.updateSecurityInfo(position, info);
+            return;
+        }
+
+        SecurityAdapter.PasswordSecurityInfo info = new SecurityAdapter.PasswordSecurityInfo(this);
 
         // 1. Nbvcxz Analysis
         Result result = nbvcxz.estimate(plainPassword);
         double entropy = result.getEntropy();
         
         if (entropy < 40) {
-            info.strength = "WEAK";
+            info.strength = getString(R.string.strength_weak);
             info.strengthColor = Color.parseColor("#F44336"); // Red
         } else if (entropy < 80) {
-            info.strength = "MEDIUM";
+            info.strength = getString(R.string.strength_medium);
             info.strengthColor = Color.parseColor("#FF9800"); // Orange
         } else {
-            info.strength = "STRONG";
+            info.strength = getString(R.string.strength_strong);
             info.strengthColor = Color.parseColor("#4CAF50"); // Green
         }
 
@@ -145,11 +162,11 @@ public class SecurityActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     boolean found = response.body().contains(suffix);
                     if (found) {
-                        info.status = "Compromised";
+                        info.status = getString(R.string.status_compromised);
                         info.statusColor = Color.parseColor("#F44336");
                         info.isCompromised = true;
                     } else {
-                        info.status = "SECURE";
+                        info.status = getString(R.string.status_secure);
                         info.statusColor = Color.parseColor("#4CAF50");
                         info.isCompromised = false;
                     }
@@ -159,7 +176,7 @@ public class SecurityActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                info.status = "Error";
+                info.status = getString(R.string.status_error);
                 info.statusColor = Color.GRAY;
                 adapter.updateSecurityInfo(position, info);
             }

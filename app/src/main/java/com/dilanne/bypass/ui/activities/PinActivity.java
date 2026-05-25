@@ -1,5 +1,6 @@
 package com.dilanne.bypass.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,8 +13,10 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
 import com.dilanne.bypass.MainActivity;
+import com.dilanne.bypass.R;
 import com.dilanne.bypass.auth.AuthManager;
 import com.dilanne.bypass.databinding.ActivityPinBinding;
+import com.dilanne.bypass.util.LocaleHelper;
 
 public class PinActivity extends AppCompatActivity {
 
@@ -22,6 +25,11 @@ public class PinActivity extends AppCompatActivity {
     private SharedPreferences encryptedPrefs;
     private static final String PREF_PIN = "user_pin";
     private boolean isSetupMode = false;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +41,14 @@ public class PinActivity extends AppCompatActivity {
         initEncryptedPrefs();
 
         if (isSetupMode) {
-            binding.tvPinTitle.setText("Définir votre PIN");
-            binding.tvPinSubtitle.setText("Choisissez un code à 4 chiffres pour protéger vos données");
+            binding.tvPinTitle.setText(R.string.title_pin_setup);
+            binding.tvPinSubtitle.setText(R.string.subtitle_pin_setup);
         } else {
-            binding.tvPinTitle.setText("Entrez votre PIN");
-            binding.tvPinSubtitle.setText("Accès sécurisé");
+            binding.tvPinTitle.setText(R.string.title_pin_entry);
+            binding.tvPinSubtitle.setText(R.string.subtitle_pin_entry);
         }
+
+        binding.tvLogout.setText(R.string.label_logout);
 
         binding.btnConfirmPin.setOnClickListener(v -> handlePinAction());
         binding.tvLogout.setOnClickListener(v -> {
@@ -51,7 +61,7 @@ public class PinActivity extends AppCompatActivity {
     private void handlePinAction() {
         String pin = binding.etPin.getText().toString();
         if (pin.length() < 4) {
-            Toast.makeText(this, "Le PIN doit contenir 4 chiffres", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.error_pin_length, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -60,14 +70,14 @@ public class PinActivity extends AppCompatActivity {
 
         if (isSetupMode) {
             encryptedPrefs.edit().putString(pinKey, pin).apply();
-            Toast.makeText(this, "PIN configuré avec succès !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.pin_setup_success, Toast.LENGTH_SHORT).show();
             syncAndNavigate();
         } else {
             String savedPin = encryptedPrefs.getString(pinKey, "");
             if (pin.equals(savedPin)) {
                 syncAndNavigate();
             } else {
-                Toast.makeText(this, "PIN incorrect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_invalid_pin, Toast.LENGTH_SHORT).show();
                 binding.etPin.setText("");
             }
         }

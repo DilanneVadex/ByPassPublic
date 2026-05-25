@@ -25,11 +25,16 @@ public class SecurityAdapter extends RecyclerView.Adapter<SecurityAdapter.Securi
     }
 
     public static class PasswordSecurityInfo {
-        public String strength = "Analyzing...";
+        public String strength;
         public int strengthColor = Color.GRAY;
-        public String status = "Checking...";
+        public String status;
         public int statusColor = Color.GRAY;
         public boolean isCompromised = false;
+
+        public PasswordSecurityInfo(android.content.Context context) {
+            this.strength = context.getString(R.string.status_analyzing);
+            this.status = context.getString(R.string.status_checking);
+        }
     }
 
     public SecurityAdapter(OnDecryptListener decryptListener) {
@@ -92,7 +97,7 @@ public class SecurityAdapter extends RecyclerView.Adapter<SecurityAdapter.Securi
                 if (info.isCompromised) {
                     binding.ivStatusIcon.setImageResource(R.drawable.shield_flash_fill);
                     binding.ivStatusIcon.setColorFilter(Color.RED);
-                } else if ("SECURE".equals(info.status)) {
+                } else if (binding.getRoot().getContext().getString(R.string.status_secure).equals(info.status)) {
                     binding.ivStatusIcon.setImageResource(R.drawable.shield_check_line);
                     binding.ivStatusIcon.setColorFilter(binding.getRoot().getContext().getColor(R.color.secondary));
                 } else {
@@ -100,9 +105,9 @@ public class SecurityAdapter extends RecyclerView.Adapter<SecurityAdapter.Securi
                     binding.ivStatusIcon.setColorFilter(Color.GRAY);
                 }
             } else {
-                binding.tvStrengthBadge.setText("PENDING");
+                binding.tvStrengthBadge.setText(binding.getRoot().getContext().getString(R.string.status_pending));
                 binding.tvStrengthBadge.getBackground().setTint(Color.GRAY);
-                binding.tvCompromisedBadge.setText("PENDING");
+                binding.tvCompromisedBadge.setText(binding.getRoot().getContext().getString(R.string.status_pending));
                 binding.tvCompromisedBadge.getBackground().setTint(Color.GRAY);
                 binding.ivStatusIcon.setImageResource(R.drawable.information_2_fill);
                 binding.ivStatusIcon.setColorFilter(Color.GRAY);

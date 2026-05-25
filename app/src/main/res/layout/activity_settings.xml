@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background2"
+    android:background="@drawable/background1_black"
     android:fitsSystemWindows="true">
 
     <androidx.core.widget.NestedScrollView
@@ -40,7 +40,7 @@
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/keania_one"
                     android:text="Settings"
-                    android:textColor="@color/primary"
+                    android:textColor="@color/white"
                     android:textSize="32sp" />
             </RelativeLayout>
 
@@ -79,14 +79,14 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lobster"
                         android:text="Lucas Martin"
-                        android:textColor="@color/primary"
+                        android:textColor="@color/white"
                         android:textSize="22sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="user@gmail.com"
-                        android:textColor="@color/primary_40"
+                        android:textColor="@color/white"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -119,7 +119,7 @@
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/primary_20"
                     app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/primary_40"
+                    app:strokeColor="@color/secondary_36"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -140,7 +140,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="Account Settings"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
 
                         <ImageView
@@ -159,7 +159,7 @@
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/primary_20"
                     app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/primary_40"
+                    app:strokeColor="@color/secondary_36"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -180,7 +180,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="Security"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
 
                         <ImageView
@@ -199,7 +199,7 @@
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/primary_20"
                     app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/primary_40"
+                    app:strokeColor="@color/secondary_36"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -220,7 +220,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="Password Generation"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
 
                         <ImageView
@@ -238,7 +238,7 @@
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/primary_20"
                     app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/primary_40"
+                    app:strokeColor="@color/secondary_36"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -259,7 +259,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="Dark Mode"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
@@ -277,7 +277,7 @@
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/primary_20"
                     app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/primary_40"
+                    app:strokeColor="@color/secondary_36"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -298,7 +298,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="Notifications"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
@@ -318,7 +318,7 @@
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/primary_20"
                     app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/primary_40"
+                    app:strokeColor="@color/secondary_36"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -339,7 +339,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="Languages"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
 
                         <ImageView
@@ -358,7 +358,7 @@
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/primary_20"
                     app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/primary_40"
+                    app:strokeColor="@color/secondary_36"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -379,7 +379,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="Support"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
 
                         <ImageView
@@ -398,7 +398,7 @@
                     android:layout_marginBottom="12dp"
                     app:cardBackgroundColor="@color/primary_20"
                     app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/primary_40"
+                    app:strokeColor="@color/secondary_36"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -419,7 +419,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="About"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/white"
                             android:textSize="18sp" />
 
                         <ImageView

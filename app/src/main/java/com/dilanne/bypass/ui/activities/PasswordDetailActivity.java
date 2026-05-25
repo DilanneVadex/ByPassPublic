@@ -12,10 +12,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.databinding.ActivityPasswordDetailsBinding;
 import com.dilanne.bypass.models.PasswordEntry;
 import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
+import com.dilanne.bypass.util.LocaleHelper;
 
 public class PasswordDetailActivity extends AppCompatActivity {
 
@@ -25,6 +27,11 @@ public class PasswordDetailActivity extends AppCompatActivity {
     private PasswordViewModel viewModel;
     private PasswordEntry entry;
     private boolean isPasswordVisible = false;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +52,38 @@ public class PasswordDetailActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-        binding.tvHeaderTitle.setText(entry.getTitle() + " Account");
+        binding.tvHeaderTitle.setText(getString(R.string.account_details_header, entry.getTitle()));
         binding.tvTitle.setText(entry.getTitle());
         binding.tvEmail.setText(entry.getEmail());
-        binding.tvLoginValue.setText(entry.getEmail()); // Assuming email is the login if no separate field
-        
-        // You might want to map category to icon here
-        // binding.ivAppIcon.setImageResource(...);
+        binding.tvLoginValue.setText(entry.getEmail());
+
+        // Charger l'icône du site web avec Glide
+        String faviconUrl = "";
+        if (entry.getUrl() != null && !entry.getUrl().isEmpty()) {
+            faviconUrl = "https://icons.duckduckgo.com/ip3/" + extractDomain(entry.getUrl()) + ".ico";
+        }
+
+        Glide.with(this)
+                .load(faviconUrl)
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
+                .into(binding.ivAppIcon);
+    }
+
+    private String extractDomain(String url) {
+        try {
+            if (!url.startsWith("http")) {
+                url = "https://" + url;
+            }
+            java.net.URI uri = new java.net.URI(url);
+            String domain = uri.getHost();
+            if (domain != null) {
+                return domain.startsWith("www.") ? domain.substring(4) : domain;
+            }
+        } catch (Exception e) {
+            return url;
+        }
+        return url;
     }
 
     private void setupClickListeners() {
@@ -89,19 +121,19 @@ public class PasswordDetailActivity extends AppCompatActivity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText(label, text);
         clipboard.setPrimaryClip(clip);
-        Toast.makeText(this, label + " copied to clipboard", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.copied_to_clipboard, label), Toast.LENGTH_SHORT).show();
     }
 
     private void showDeleteConfirmation() {
         new AlertDialog.Builder(this)
-                .setTitle("Delete Account")
-                .setMessage("Are you sure you want to delete this account?")
-                .setPositiveButton("Delete", (dialog, which) -> {
+                .setTitle(R.string.delete_confirmation_title)
+                .setMessage(R.string.delete_confirmation_message)
+                .setPositiveButton(R.string.btn_delete, (dialog, which) -> {
                     viewModel.delete(entry);
-                    Toast.makeText(this, "Account deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toast_account_deleted, Toast.LENGTH_SHORT).show();
                     finish();
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 }

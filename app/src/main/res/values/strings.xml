@@ -4,6 +4,9 @@
     <string name="subtitle_secured">Your passwords. Secured.</string>
     <string name="hint_email">Enter your email</string>
     <string name="hint_password">Enter your password</string>
+    <string name="error_fill_fields">Please fill in all fields</string>
+    <string name="error_passwords_dont_match">Passwords do not match</string>
+    <string name="registration_success">Account created!</string>
     <string name="btn_login">Connexion</string>
     <string name="or_login_with">Or login with</string>
     <string name="sign_in_google">Sign in with Google</string>
@@ -17,7 +20,7 @@
     <string name="hint_search">Rechercher...</string>
     <string name="label_security_score">Security Score</string>
     <string name="value_security_score">82% Secure</string>
-    <string name="label_favoris">Favoris</string>
+    <string name="label_recent">Recent</string>
     <string name="label_categories">Categories</string>
     <string name="label_password">password</string>
 
@@ -47,6 +50,45 @@
     <string name="delete_confirmation_title">Delete Account</string>
     <string name="delete_confirmation_message">Are you sure you want to delete this account?</string>
     <string name="copied_to_clipboard">%1$s copied to clipboard</string>
+    <string name="label_login_prefix">Login : </string>
+    <string name="label_password_prefix">Password : </string>
+    <string name="btn_delete_caps">DELETE</string>
+    <string name="btn_edit_caps">EDIT</string>
+    <string name="toast_account_deleted">Account deleted</string>
+    <string name="title_add_account">Add Account</string>
+    <string name="title_edit_account_header">%1$s Edit Account</string>
+    <string name="error_fill_required">Please fill in all required fields</string>
+    <string name="toast_account_updated">Account updated successfully!</string>
+    <string name="toast_account_added">Account added successfully!</string>
+    <string name="hint_url">URL / Service</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="title_generator">Generator</string>
+    <string name="label_password_length">Password Length</string>
+    <string name="btn_generate">Generate Password</string>
+    <string name="label_copy">Copy</string>
+    <string name="toast_pass_copied">Password copied to clipboard</string>
+    <string name="error_select_option">Please select at least one option</string>
+    <string name="toast_scanning">Scanning %1$d passwords...</string>
+    <string name="error_no_pass_to_scan">No passwords to scan</string>
+    <string name="label_scan">SCAN</string>
+    <string name="btn_scan_compromised">Scan Compromised password</string>
+    <string name="title_security_dashboard">Security\nDashboard</string>
+    <string name="strength_unknown">UNKNOWN</string>
+    <string name="strength_weak">WEAK</string>
+    <string name="strength_medium">MEDIUM</string>
+    <string name="strength_strong">STRONG</string>
+    <string name="status_compromised">Compromised</string>
+    <string name="status_secure">SECURE</string>
+    <string name="status_error">Error</string>
+    <string name="status_analyzing">Analyzing...</string>
+    <string name="status_checking">Checking...</string>
+    <string name="status_pending">PENDING</string>
+    <string name="toast_profile_updated">Profile Updated</string>
+    <string name="toast_syncing_cloud">Syncing data from Cloud...</string>
+    <string name="label_upper">Include Uppercase (A-Z)</string>
+    <string name="label_lower">Include Lowercase (a-z)</string>
+    <string name="label_numbers">Include Numbers (0-9)</string>
+    <string name="label_symbols">Include Symbols (#&amp;@!)</string>
 
     <!-- Language Screen -->
     <string name="title_language">Language</string>
@@ -55,6 +97,26 @@
     <string name="lang_german">German</string>
     <string name="lang_russian">Russian</string>
     <string name="btn_confirm">Confirm</string>
+
+    <!-- PIN Screen -->
+    <string name="title_pin_setup">Set your PIN</string>
+    <string name="subtitle_pin_setup">Choose a 4-digit code to protect your data</string>
+    <string name="title_pin_entry">Enter your PIN</string>
+    <string name="label_about_us">About Us</string>
+    <string name="label_made_by">Made By Dilanne</string>
+    <string name="label_support">Support</string>
+    <string name="label_no_service">No Service Available</string>
+    <string name="subtitle_pin_entry">Secure Access</string>
+    <string name="error_pin_length">PIN must contain 4 digits</string>
+    <string name="pin_setup_success">PIN configured successfully!</string>
+    <string name="error_invalid_pin">Incorrect PIN</string>
+    <string name="error_login_failed">Login failed</string>
+    <string name="error_registration_failed">Registration failed</string>
+    <string name="error_auth_not_allowed">Email registration is not enabled.</string>
+    <string name="error_email_in_use">This email is already in use.</string>
+    <string name="error_invalid_email_format">Invalid email format.</string>
+    <string name="error_weak_password">Password is too weak.</string>
+    <string name="label_logout">Logout</string>
 
     <!-- TODO: Replace with your actual Web Client ID from Google Cloud Console -->
     <string name="default_web_client_id" translatable="false">645290432896-sfvobs9e7sr9d2ir5dvg4hc88f0ej58g.apps.googleusercontent.com</string>
