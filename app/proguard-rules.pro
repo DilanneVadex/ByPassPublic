@@ -1,21 +1,30 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Security & Obfuscation
+-keepattributes Signature, *Annotation*, InnerClasses
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile, LineNumberTable
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Preserve Firebase & Google Services
+-keep class com.google.firebase.** { *; }
+-keep class com.google.android.gms.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Room
+-keep class * extends androidx.room.RoomDatabase
+-keep class androidx.room.util.TableInfo$Column { *; }
+-keep class androidx.room.util.TableInfo$ForeignKey { *; }
+-keep class androidx.room.util.TableInfo$Index { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Security classes (prevent too much obfuscation that could break Keystore interaction)
+-keep class com.dilanne.bypass.security.** { *; }
+-keep class com.dilanne.bypass.models.** { *; }
+
+# Nbvcxz
+-keep class me.gosimple.nbvcxz.** { *; }
+
+# Retrofit
+-keep class retrofit2.** { *; }
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+
+# Obfuscate non-public methods and fields
+-repackageclasses ''
+-allowaccessmodification
+-overloadaggressively

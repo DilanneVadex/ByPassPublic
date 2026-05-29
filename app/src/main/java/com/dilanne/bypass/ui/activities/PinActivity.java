@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
@@ -16,6 +17,7 @@ import com.dilanne.bypass.MainActivity;
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.auth.AuthManager;
 import com.dilanne.bypass.databinding.ActivityPinBinding;
+import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
 import com.dilanne.bypass.util.LocaleHelper;
 
 public class PinActivity extends AppCompatActivity {
@@ -84,9 +86,31 @@ public class PinActivity extends AppCompatActivity {
     }
 
     private void syncAndNavigate() {
+        String userId = com.google.firebase.auth.FirebaseAuth.getInstance().getUid();
+        PasswordViewModel viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
+
+        // Restore crypto key if available
+        try {
+            android.content.SharedPreferences encryptedPrefs = com.dilanne.bypass.util.SecurePrefs.getEncryptedSharedPreferences(this);
+            if (userId != null) {
+                String base64Key = null;
+                try {
+                    base64Key = encryptedPrefs.getString("master_crypto_key_" + userId, null);
+                } catch (Exception e) {
+                    Log.e(TAG, "Decryption failed for local crypto key. Clearing corrupted storage.", e);
+                    com.dilanne.bypass.util.SecurePrefs.handleCorruption(this);
+                }
+                
+                if (base64Key != null) {
+                    viewModel.restoreCrypto(base64Key);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error restoring crypto key", e);
+        }
+
         // Déclencher la synchronisation avant de naviguer
-        com.dilanne.bypass.data.repository.PasswordRepository repository = new com.dilanne.bypass.data.repository.PasswordRepository(getApplication());
-        repository.syncFromRemote();
+        viewModel.syncFromRemote();
         
         navigateToMain();
     }
@@ -98,17 +122,7 @@ public class PinActivity extends AppCompatActivity {
 
     private void initEncryptedPrefs() {
         try {
-            MasterKey masterKey = new MasterKey.Builder(this)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-
-            encryptedPrefs = EncryptedSharedPreferences.create(
-                    this,
-                    "secret_shared_prefs",
-                    masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            );
+            encryptedPrefs = com.dilanne.bypass.util.SecurePrefs.getEncryptedSharedPreferences(this);
         } catch (Exception e) {
             Log.e(TAG, "Error initializing EncryptedSharedPreferences, falling back to debug_prefs", e);
             encryptedPrefs = getSharedPreferences("debug_prefs", MODE_PRIVATE);

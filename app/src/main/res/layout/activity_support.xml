@@ -16,10 +16,12 @@
 
         <ImageButton
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/arrow_left_line"
             app:tint="@color/secondary" />
 
@@ -43,7 +45,10 @@
                 android:fontFamily="@font/keania_one"
                 android:text="@string/label_support"
                 android:textColor="@color/white"
-                android:textSize="32sp" />
+                android:textSize="28sp"
+                android:maxWidth="250dp"
+                android:ellipsize="end"
+                android:singleLine="true" />
         </LinearLayout>
     </RelativeLayout>
 

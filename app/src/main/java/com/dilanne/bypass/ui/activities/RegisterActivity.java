@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.lifecycle.ViewModelProvider;
+import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.auth.AuthManager;
 import com.dilanne.bypass.databinding.ActivityRegisterBinding;
@@ -58,6 +60,13 @@ public class RegisterActivity extends AppCompatActivity {
             binding.progressBar.setVisibility(View.GONE);
             if (task.isSuccessful()) {
                 Log.d(TAG, "Registration successful for: " + email);
+                
+                String userId = com.google.firebase.auth.FirebaseAuth.getInstance().getUid();
+                // Initialize crypto with user password
+                // This now automatically syncs to Firestore and persists locally
+                PasswordViewModel viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
+                viewModel.initializeCrypto(password);
+                
                 Toast.makeText(RegisterActivity.this, getString(R.string.registration_success), Toast.LENGTH_SHORT).show();
                 // Redirect to PIN Setup
                 Intent intent = new Intent(RegisterActivity.this, PinActivity.class);

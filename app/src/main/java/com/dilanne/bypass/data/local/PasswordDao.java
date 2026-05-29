@@ -26,6 +26,15 @@ public interface PasswordDao {
     @Query("SELECT * FROM passwords ORDER BY lastModified DESC")
     LiveData<List<PasswordEntry>> getAllPasswords();
 
+    @Query("SELECT * FROM passwords ORDER BY lastModified DESC")
+    List<PasswordEntry> getAllPasswordsSync();
+
     @Query("SELECT * FROM passwords WHERE category = :category ORDER BY lastModified DESC")
     LiveData<List<PasswordEntry>> getPasswordsByCategory(String category);
+
+    @Query("DELETE FROM passwords")
+    void deleteAll();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<PasswordEntry> passwords);
 }

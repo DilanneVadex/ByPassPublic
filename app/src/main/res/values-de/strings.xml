@@ -109,4 +109,8 @@
     <string name="pin_setup_success">PIN erfolgreich konfiguriert!</string>
     <string name="error_invalid_pin">Falsche PIN</string>
     <string name="label_logout">Abmelden</string>
+    <string name="label_force_refresh">Sicherheitsaktualisierung erzwingen</string>
+    <string name="toast_security_refresh_started">Sicherheitsaktualisierung gestartet...</string>
+    <string name="toast_security_refresh_complete">Sicherheitsaktualisierung abgeschlossen!</string>
+    <string name="toast_scanning_start">Sicherheits-Scan wird gestartet...</string>
 </resources>

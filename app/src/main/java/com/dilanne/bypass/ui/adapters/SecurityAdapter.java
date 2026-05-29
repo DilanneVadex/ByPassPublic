@@ -17,38 +17,25 @@ import java.util.Map;
 public class SecurityAdapter extends RecyclerView.Adapter<SecurityAdapter.SecurityViewHolder> {
 
     private List<PasswordEntry> passwords = new ArrayList<>();
-    private final Map<Integer, PasswordSecurityInfo> securityInfoMap = new HashMap<>();
     private final OnDecryptListener decryptListener;
+    private final OnItemClickListener itemClickListener;
 
     public interface OnDecryptListener {
         String onDecrypt(String encryptedPassword);
     }
 
-    public static class PasswordSecurityInfo {
-        public String strength;
-        public int strengthColor = Color.GRAY;
-        public String status;
-        public int statusColor = Color.GRAY;
-        public boolean isCompromised = false;
-
-        public PasswordSecurityInfo(android.content.Context context) {
-            this.strength = context.getString(R.string.status_analyzing);
-            this.status = context.getString(R.string.status_checking);
-        }
+    public interface OnItemClickListener {
+        void onItemClick(PasswordEntry entry, View view);
     }
 
-    public SecurityAdapter(OnDecryptListener decryptListener) {
+    public SecurityAdapter(OnDecryptListener decryptListener, OnItemClickListener itemClickListener) {
         this.decryptListener = decryptListener;
+        this.itemClickListener = itemClickListener;
     }
 
     public void setPasswords(List<PasswordEntry> passwords) {
         this.passwords = passwords;
         notifyDataSetChanged();
-    }
-
-    public void updateSecurityInfo(int position, PasswordSecurityInfo info) {
-        securityInfoMap.put(position, info);
-        notifyItemChanged(position);
     }
 
     @NonNull
@@ -62,8 +49,7 @@ public class SecurityAdapter extends RecyclerView.Adapter<SecurityAdapter.Securi
     @Override
     public void onBindViewHolder(@NonNull SecurityViewHolder holder, int position) {
         PasswordEntry entry = passwords.get(position);
-        PasswordSecurityInfo info = securityInfoMap.get(position);
-        holder.bind(entry, info);
+        holder.bind(entry);
     }
 
     @Override
@@ -83,21 +69,34 @@ public class SecurityAdapter extends RecyclerView.Adapter<SecurityAdapter.Securi
             this.binding = binding;
         }
 
-        public void bind(PasswordEntry entry, PasswordSecurityInfo info) {
+        public void bind(PasswordEntry entry) {
             binding.tvServiceName.setText(entry.getTitle());
             binding.tvUserEmail.setText("• " + entry.getEmail());
-            
-            if (info != null) {
-                binding.tvStrengthBadge.setText(info.strength);
-                binding.tvStrengthBadge.getBackground().setTint(info.strengthColor);
-                
-                binding.tvCompromisedBadge.setText(info.status);
-                binding.tvCompromisedBadge.getBackground().setTint(info.statusColor);
-                
-                if (info.isCompromised) {
+
+            // Load favicon
+            String domain = extractDomain(entry.getUrl());
+            String faviconUrl = "https://icons.duckduckgo.com/ip3/" + domain + ".ico";
+
+            com.bumptech.glide.Glide.with(binding.getRoot().getContext())
+                    .load(faviconUrl)
+                    .placeholder(R.drawable.logo)
+                    .error(R.drawable.logo)
+                    .into(binding.ivServiceIcon);
+
+            String strength = entry.getSecurityStrength();
+            String status = entry.getSecurityStatus();
+
+            if (strength != null && status != null) {
+                binding.tvStrengthBadge.setText(strength);
+                binding.tvStrengthBadge.getBackground().setTint(entry.getSecurityStrengthColor());
+
+                binding.tvCompromisedBadge.setText(status);
+                binding.tvCompromisedBadge.getBackground().setTint(entry.getSecurityStatusColor());
+
+                if (entry.isCompromised()) {
                     binding.ivStatusIcon.setImageResource(R.drawable.shield_flash_fill);
                     binding.ivStatusIcon.setColorFilter(Color.RED);
-                } else if (binding.getRoot().getContext().getString(R.string.status_secure).equals(info.status)) {
+                } else if (binding.getRoot().getContext().getString(R.string.status_secure).equals(status)) {
                     binding.ivStatusIcon.setImageResource(R.drawable.shield_check_line);
                     binding.ivStatusIcon.setColorFilter(binding.getRoot().getContext().getColor(R.color.secondary));
                 } else {
@@ -112,6 +111,29 @@ public class SecurityAdapter extends RecyclerView.Adapter<SecurityAdapter.Securi
                 binding.ivStatusIcon.setImageResource(R.drawable.information_2_fill);
                 binding.ivStatusIcon.setColorFilter(Color.GRAY);
             }
+
+            binding.getRoot().setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(entry, v);
+                }
+            });
+        }
+
+        private String extractDomain(String url) {
+            if (url == null || url.isEmpty()) return "";
+            try {
+                if (!url.startsWith("http")) {
+                    url = "https://" + url;
+                }
+                java.net.URI uri = new java.net.URI(url);
+                String domain = uri.getHost();
+                if (domain != null) {
+                    return domain.startsWith("www.") ? domain.substring(4) : domain;
+                }
+            } catch (Exception e) {
+                return url;
+            }
+            return url;
         }
     }
 }

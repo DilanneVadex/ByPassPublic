@@ -103,7 +103,8 @@
                 android:background="@drawable/bg_security_score"
                 android:gravity="center_vertical"
                 android:backgroundTint="@color/primary_40"
-                android:padding="16dp">
+                android:padding="16dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="40dp"
@@ -118,12 +119,14 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvSecurityScoreLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_security_score"
                         android:textColor="@color/white" />
 
                     <TextView
+                        android:id="@+id/tvSecurityScoreValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/value_security_score"
@@ -250,59 +253,64 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_card_purple"
             android:padding="8dp"
-            android:paddingBottom="100dp"
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@android:layout/simple_list_item_2" />
     </com.google.android.material.card.MaterialCardView>
     <!-- Bottom Navigation Area -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="vertical">
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fabAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/background1_black"
-            android:contentDescription="@null"
-            app:contentPadding="15dp">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:padding="50dp"
-                android:src="@drawable/add_fill"
-                app:tint="@color/primary_40" />
-
-        </com.google.android.material.card.MaterialCardView>
+        android:layout_gravity="bottom">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_bottom_nav"
-            app:itemGravity="center"
+            app:itemIconSize="28dp"
+
             app:itemIconTint="@color/nav_item_color"
             app:itemTextColor="@color/nav_item_color"
             app:itemBackground="@drawable/nav_item_background_selector"
             app:itemActiveIndicatorStyle="@null"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:paddingBottomSystemWindowInsets="false"/>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fabAdd"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="100dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/black"
+            app:strokeColor="@color/white"
+            app:strokeWidth="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background1_black" />
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:src="@drawable/add_fill"
+                app:tint="@color/white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

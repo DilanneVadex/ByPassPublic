@@ -27,18 +27,25 @@
 
                 <ImageButton
                     android:id="@+id/btnBack"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_centerVertical="true"
+                    android:padding="6dp"
+                    android:scaleType="fitCenter"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/arrow_left_line"
                     app:tint="@color/secondary" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginEnd="60dp"
                     android:fontFamily="@font/keania_one"
+                    android:gravity="center"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="Settings"
                     android:textColor="@color/white"
                     android:textSize="32sp" />
@@ -63,6 +70,7 @@
                         android:id="@+id/ivProfileAvatar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:src="@drawable/users"
                         android:scaleType="centerCrop" />
                 </com.google.android.material.card.MaterialCardView>
 
@@ -75,6 +83,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lobster"
@@ -83,6 +92,7 @@
                         android:textSize="22sp" />
 
                     <TextView
+                        android:id="@+id/tvUserEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="user@gmail.com"
@@ -90,12 +100,7 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/arrow_right_s_line" />
+
             </RelativeLayout>
 
             <View
@@ -272,6 +277,7 @@
 
                 <!-- Notifications -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvNotifications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
@@ -302,6 +308,7 @@
                             android:textSize="18sp" />
 
                         <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/switchNotifications"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
@@ -339,6 +346,46 @@
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:text="Languages"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/arrow_right_s_line"
+                            app:tint="@color/secondary" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Force Security Refresh -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvForceRefresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardBackgroundColor="@color/primary_20"
+                    app:cardCornerRadius="12dp"
+                    app:strokeColor="@color/secondary_36"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/refresh_line"
+                            app:tint="@color/secondary" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="@string/label_force_refresh"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -434,21 +481,31 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
+    <!-- Bottom Navigation Area -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomArea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/bg_bottom_nav"
-        app:itemGravity="center"
-        app:itemIconTint="@color/nav_item_color"
-        app:itemTextColor="@color/nav_item_color"
-        app:itemBackground="@drawable/nav_item_background_selector"
-        app:itemActiveIndicatorStyle="@null"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_nav_menu" />
+        android:layout_gravity="bottom">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_bottom_nav"
+            app:itemIconSize="28dp"
+            app:itemIconTint="@color/nav_item_color"
+            app:itemTextColor="@color/nav_item_color"
+            app:itemBackground="@drawable/nav_item_background_selector"
+            app:itemActiveIndicatorStyle="@null"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_nav_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:paddingBottomSystemWindowInsets="false"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

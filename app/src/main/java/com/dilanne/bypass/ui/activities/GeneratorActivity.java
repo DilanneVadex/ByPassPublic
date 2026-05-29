@@ -11,10 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dilanne.bypass.MainActivity;
 import com.dilanne.bypass.R;
+import com.dilanne.bypass.auth.AuthManager;
 import com.dilanne.bypass.databinding.ActivityGeneratorBinding;
+import com.dilanne.bypass.security.PasswordGenerator;
 import com.dilanne.bypass.util.LocaleHelper;
+import com.google.firebase.auth.FirebaseUser;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,12 +24,8 @@ import java.util.List;
 public class GeneratorActivity extends AppCompatActivity {
 
     private ActivityGeneratorBinding binding;
-    private final SecureRandom random = new SecureRandom();
-
-    private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
-    private static final String NUMBERS = "0123456789";
-    private static final String SYMBOLS = "#&@!$*-+?_";
+    private final PasswordGenerator passwordGenerator = new PasswordGenerator();
+    private AuthManager authManager;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -40,9 +38,20 @@ public class GeneratorActivity extends AppCompatActivity {
         binding = ActivityGeneratorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        authManager = new AuthManager(this);
+
         setupUI();
+        setupUserInfo();
         setupActions();
         generatePassword(); // Initial generation
+    }
+
+    private void setupUserInfo() {
+        FirebaseUser user = authManager.getCurrentUser();
+        if (user != null) {
+            binding.tvUserName.setText(user.getDisplayName() != null ? user.getDisplayName() : "Utilisateur");
+            binding.tvUserEmail.setText(user.getEmail());
+        }
     }
 
     private void setupUI() {
@@ -99,41 +108,13 @@ public class GeneratorActivity extends AppCompatActivity {
         boolean useNumbers = binding.switchNumbers.switchEnable.isChecked();
         boolean useSymbols = binding.switchSymbols.switchEnable.isChecked();
 
-        StringBuilder characterPool = new StringBuilder();
-        List<Character> result = new ArrayList<>();
+        String password = passwordGenerator.generate(length, useUpper, useLower, useNumbers, useSymbols);
 
-        if (useUpper) {
-            characterPool.append(UPPER);
-            result.add(UPPER.charAt(random.nextInt(UPPER.length())));
-        }
-        if (useLower) {
-            characterPool.append(LOWER);
-            result.add(LOWER.charAt(random.nextInt(LOWER.length())));
-        }
-        if (useNumbers) {
-            characterPool.append(NUMBERS);
-            result.add(NUMBERS.charAt(random.nextInt(NUMBERS.length())));
-        }
-        if (useSymbols) {
-            characterPool.append(SYMBOLS);
-            result.add(SYMBOLS.charAt(random.nextInt(SYMBOLS.length())));
-        }
-
-        if (characterPool.length() == 0) {
+        if (password.isEmpty()) {
             Toast.makeText(this, R.string.error_select_option, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        while (result.size() < length) {
-            result.add(characterPool.charAt(random.nextInt(characterPool.length())));
-        }
-
-        Collections.shuffle(result);
-        StringBuilder password = new StringBuilder();
-        for (char c : result) {
-            password.append(c);
-        }
-
-        binding.tvGeneratedPassword.setText(password.toString());
+        binding.tvGeneratedPassword.setText(password);
     }
 }

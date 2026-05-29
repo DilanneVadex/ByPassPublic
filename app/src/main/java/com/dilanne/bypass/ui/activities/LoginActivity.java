@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
+import androidx.lifecycle.ViewModelProvider;
+import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.auth.AuthManager;
 import com.dilanne.bypass.databinding.ActivityLoginBinding;
@@ -72,7 +74,13 @@ public class LoginActivity extends AppCompatActivity {
         authManager.loginWithEmail(email, password).addOnCompleteListener(this, task -> {
             binding.progressBar.setVisibility(View.GONE);
             if (task.isSuccessful()) {
-                navigateToPin(true); // Toujours demander un nouveau PIN à la connexion
+                String userId = com.google.firebase.auth.FirebaseAuth.getInstance().getUid();
+                // Initialize crypto with user password for cross-device sync
+                // This now automatically syncs to Firestore and persists locally
+                PasswordViewModel viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
+                viewModel.initializeCrypto(password);
+
+                navigateToPin(true);
             } else {
                 Exception e = task.getException();
                 Log.e(TAG, "Login failed", e);
@@ -111,10 +119,15 @@ public class LoginActivity extends AppCompatActivity {
     private void signInWithGitHub() {
         binding.progressBar.setVisibility(View.VISIBLE);
         authManager.signInWithGitHub(this).addOnCompleteListener(this, task -> {
-            binding.progressBar.setVisibility(View.GONE);
             if (task.isSuccessful()) {
-                navigateToPin(true);
+                // Initialize crypto for social login and wait for it before navigating
+                PasswordViewModel viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
+                viewModel.initializeCryptoSocial(() -> {
+                    binding.progressBar.setVisibility(View.GONE);
+                    navigateToPin(true);
+                });
             } else {
+                binding.progressBar.setVisibility(View.GONE);
                 Toast.makeText(this, "Échec GitHub", Toast.LENGTH_SHORT).show();
             }
         });
@@ -127,10 +140,15 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount account = GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class);
                 authManager.signInWithGoogle(account.getIdToken()).addOnCompleteListener(this, task -> {
-                    binding.progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        navigateToPin(true);
+                        // Initialize crypto for social login and wait for it before navigating
+                        PasswordViewModel viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
+                        viewModel.initializeCryptoSocial(() -> {
+                            binding.progressBar.setVisibility(View.GONE);
+                            navigateToPin(true);
+                        });
                     } else {
+                        binding.progressBar.setVisibility(View.GONE);
                         Toast.makeText(this, "Firebase Error", Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -33,6 +33,20 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    lint {
+        abortOnError = false
+        checkReleaseBuilds = true
+        ignoreWarnings = false
+        checkDependencies = true
+        xmlReport = true
+        htmlReport = true
+        
+        // Sécurité : Activer les vérifications spécifiques
+        enable.add("HardcodedText")
+        enable.add("InsecureStorage")
+        enable.add("TrustAllX509TrustManager")
+    }
 }
 
 dependencies {
@@ -68,7 +82,14 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
 
+    // WorkManager
+    implementation(libs.work.runtime)
+    androidTestImplementation(libs.work.testing)
+
     testImplementation(libs.junit)
+    testImplementation(libs.mockito)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.arch.core.testing)
+    androidTestImplementation(libs.mockito.android)
 }

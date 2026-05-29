@@ -52,10 +52,17 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Request Notification Permission for Android 13+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
+            }
+        }
+
         viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
 
         // Sync data from Firebase
-        viewModel.syncFromRemote();
+        viewModel.startRealtimeSync();
 
         setupRecyclerViews();
         setupSearch();
@@ -63,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
         setupBottomNav();
         setupFab();
         setupMenu();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (viewModel != null) {
+            viewModel.stopRealtimeSync();
+        }
     }
 
     private void setupMenu() {
@@ -111,20 +126,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerViews() {
-        // Categories
-        List<Category> categories = new ArrayList<>();
-        categories.add(new Category(getString(R.string.cat_social), R.drawable.team_fill));
-        categories.add(new Category(getString(R.string.cat_work), R.drawable.briefcase_4_fill));
-        categories.add(new Category(getString(R.string.cat_bank), R.drawable.bank_card_fill));
-        categories.add(new Category(getString(R.string.cat_shopping), R.drawable.shopping_cart_2_fill));
-        
-        categoryAdapter = new CategoryAdapter(categories, category -> {
+        // Categories - Initially empty, will be populated based on data
+        categoryAdapter = new CategoryAdapter(new ArrayList<>(), category -> {
             if (category == null) {
                 selectedCategory.setValue("");
             } else {
                 selectedCategory.setValue(category.getName());
             }
         });
+        binding.rvCategories.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.rvCategories.setAdapter(categoryAdapter);
 
         // Passwords List (Vertical)
@@ -143,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void observeViewModel() {
+        // Observe security score from SharedPreferences
+        updateSecurityScoreUI();
+
         filteredPasswords.addSource(viewModel.getAllPasswords(), passwords -> {
             filterAndPopulate(passwords, searchQuery.getValue(), selectedCategory.getValue());
         });
@@ -167,8 +180,27 @@ public class MainActivity extends AppCompatActivity {
                         .limit(5) // Show top 5 recent
                         .collect(Collectors.toList());
                 recentAdapter.submitList(recent);
+
+                // Update Categories: only show those that have passwords
+                updateCategoriesList(passwords);
             }
         });
+    }
+
+    private void updateCategoriesList(List<PasswordEntry> passwords) {
+        List<String> activeCategoryNames = passwords.stream()
+                .map(PasswordEntry::getCategory)
+                .filter(c -> c != null && !c.isEmpty())
+                .distinct()
+                .collect(Collectors.toList());
+
+        List<Category> allAvailable = Category.getAllCategories();
+        List<Category> activeCategories = allAvailable.stream()
+                .filter(c -> activeCategoryNames.contains(c.getName()))
+                .collect(Collectors.toList());
+
+        categoryAdapter.updateCategories(activeCategories);
+        binding.sectionCategories.setVisibility(activeCategories.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     private void filterAndPopulate(List<PasswordEntry> passwords, String query, String category) {
@@ -206,10 +238,54 @@ public class MainActivity extends AppCompatActivity {
         binding.sectionPasswordLabel.setVisibility(visibility);
     }
 
+    private void updateSecurityScoreUI() {
+        int score = getSharedPreferences("security_prefs", Context.MODE_PRIVATE)
+                .getInt("global_score", 0);
+
+        binding.tvSecurityScoreValue.setText(score + "%");
+
+        if (score < 40) {
+            binding.tvSecurityScoreValue.setTextColor(getColor(R.color.red));
+        } else if (score < 80) {
+            binding.tvSecurityScoreValue.setTextColor(android.graphics.Color.parseColor("#FF9800")); // Orange
+        } else {
+            binding.tvSecurityScoreValue.setTextColor(getColor(R.color.green));
+        }
+    }
+
+    private final android.content.SharedPreferences.OnSharedPreferenceChangeListener scoreListener =
+            (sharedPreferences, key) -> {
+                if ("global_score".equals(key)) {
+                    runOnUiThread(this::updateSecurityScoreUI);
+                }
+            };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSharedPreferences("security_prefs", Context.MODE_PRIVATE)
+                .registerOnSharedPreferenceChangeListener(scoreListener);
+        updateSecurityScoreUI();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getSharedPreferences("security_prefs", Context.MODE_PRIVATE)
+                .unregisterOnSharedPreferenceChangeListener(scoreListener);
+    }
+
     private void handleTogglePassword(PasswordEntry entry, PasswordAdapter.PasswordViewHolder holder) {
         if (!holder.isPasswordVisible()) {
             String decrypted = viewModel.decryptPassword(entry.getEncryptedPassword());
-            holder.setPasswordText(decrypted, true);
+            if ("[Invalid Key]".equals(decrypted)) {
+                android.widget.Toast.makeText(this, "Impossible de déchiffrer : Clé incorrecte ou données d'un autre appareil.", android.widget.Toast.LENGTH_LONG).show();
+                holder.setPasswordText("********", false);
+            } else if ("[Error]".equals(decrypted)) {
+                android.widget.Toast.makeText(this, "Erreur de déchiffrement.", android.widget.Toast.LENGTH_SHORT).show();
+            } else {
+                holder.setPasswordText(decrypted, true);
+            }
         } else {
             holder.setPasswordText("••••••••", false);
         }

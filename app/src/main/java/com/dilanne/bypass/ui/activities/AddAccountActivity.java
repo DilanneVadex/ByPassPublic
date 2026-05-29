@@ -11,16 +11,23 @@ import com.bumptech.glide.Glide;
 import com.dilanne.bypass.R;
 import com.dilanne.bypass.databinding.ActivityAddAccountBinding;
 import com.dilanne.bypass.models.PasswordEntry;
+import com.dilanne.bypass.ui.adapters.CategoryAdapter;
 import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
 import com.dilanne.bypass.util.LocaleHelper;
 
+import com.dilanne.bypass.util.LocaleHelper;
+
 public class AddAccountActivity extends AppCompatActivity {
+
+
 
     public static final String EXTRA_PASSWORD_ENTRY = "extra_password_entry";
 
     private ActivityAddAccountBinding binding;
     private PasswordViewModel viewModel;
     private PasswordEntry editingEntry;
+    private CategoryAdapter categoryAdapter;
+    private String selectedCategoryName = "Others";
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -34,6 +41,8 @@ public class AddAccountActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         viewModel = new ViewModelProvider(this).get(PasswordViewModel.class);
+
+        setupCategorySelection();
 
         if (getIntent().hasExtra(EXTRA_PASSWORD_ENTRY)) {
             editingEntry = (PasswordEntry) getIntent().getSerializableExtra(EXTRA_PASSWORD_ENTRY);
@@ -49,14 +58,30 @@ public class AddAccountActivity extends AppCompatActivity {
         setupLivePreview();
     }
 
+    private void setupCategorySelection() {
+        categoryAdapter = new CategoryAdapter(com.dilanne.bypass.models.Category.getAllCategories(), category -> {
+            if (category != null) {
+                selectedCategoryName = category.getName();
+            }
+        });
+        binding.rvCategorySelect.setAdapter(categoryAdapter);
+    }
+
     private void setupAddMode() {
         binding.tvTitle.setText(R.string.title_add_account);
+        // Default selection
+        categoryAdapter.setSelectedCategory(selectedCategoryName);
     }
 
     private void setupEditMode() {
         binding.tvTitle.setText(getString(R.string.title_edit_account_header, editingEntry.getTitle()));
         binding.etUrl.setText(editingEntry.getUrl());
         binding.etLogin.setText(editingEntry.getEmail()); 
+        
+        if (editingEntry.getCategory() != null) {
+            selectedCategoryName = editingEntry.getCategory();
+            categoryAdapter.setSelectedCategory(selectedCategoryName);
+        }
         
         String decrypted = viewModel.decryptPassword(editingEntry.getEncryptedPassword());
         binding.etPassword.setText(decrypted);
@@ -141,10 +166,10 @@ public class AddAccountActivity extends AppCompatActivity {
                 title = title.substring(0, 1).toUpperCase() + title.substring(1);
             }
             entry.setTitle(title);
-            entry.setCategory("General");
             entry.setFavorite(false);
         }
 
+        entry.setCategory(selectedCategoryName);
         entry.setUrl(url);
         entry.setEmail(login);
         entry.setLastModified(System.currentTimeMillis());

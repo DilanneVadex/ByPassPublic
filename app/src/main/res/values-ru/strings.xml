@@ -109,4 +109,8 @@
     <string name="pin_setup_success">PIN-код успешно настроен!</string>
     <string name="error_invalid_pin">Неверный PIN-код</string>
     <string name="label_logout">Выйти</string>
+    <string name="label_force_refresh">Принудительное обновление безопасности</string>
+    <string name="toast_security_refresh_started">Обновление безопасности начато...</string>
+    <string name="toast_security_refresh_complete">Обновление безопасности завершено!</string>
+    <string name="toast_scanning_start">Запуск проверки безопасности...</string>
 </resources>

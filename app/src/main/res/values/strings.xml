@@ -72,7 +72,7 @@
     <string name="error_no_pass_to_scan">No passwords to scan</string>
     <string name="label_scan">SCAN</string>
     <string name="btn_scan_compromised">Scan Compromised password</string>
-    <string name="title_security_dashboard">Security\nDashboard</string>
+    <string name="title_security_dashboard">Security Dashboard</string>
     <string name="strength_unknown">UNKNOWN</string>
     <string name="strength_weak">WEAK</string>
     <string name="strength_medium">MEDIUM</string>
@@ -119,5 +119,9 @@
     <string name="label_logout">Logout</string>
 
     <!-- TODO: Replace with your actual Web Client ID from Google Cloud Console -->
+    <string name="label_force_refresh">Force Security Refresh</string>
+    <string name="toast_security_refresh_started">Security refresh started...</string>
+    <string name="toast_security_refresh_complete">Security refresh complete!</string>
+    <string name="toast_scanning_start">Starting security scan...</string>
     <string name="default_web_client_id" translatable="false">645290432896-sfvobs9e7sr9d2ir5dvg4hc88f0ej58g.apps.googleusercontent.com</string>
 </resources>

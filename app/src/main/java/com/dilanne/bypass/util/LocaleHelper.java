@@ -39,10 +39,21 @@ public class LocaleHelper {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 
-        Configuration configuration = context.getResources().getConfiguration();
-        configuration.setLocale(locale);
-        configuration.setLayoutDirection(locale);
-
-        return context.createConfigurationContext(configuration);
+        Resources res = context.getResources();
+        Configuration configuration = new Configuration(res.getConfiguration());
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            configuration.setLocale(locale);
+            configuration.setLayoutDirection(locale);
+            context = context.createConfigurationContext(configuration);
+        } else {
+            configuration.locale = locale;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                configuration.setLayoutDirection(locale);
+            }
+            res.updateConfiguration(configuration, res.getDisplayMetrics());
+        }
+        
+        return context;
     }
 }

@@ -6,7 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dilanne.bypass.databinding.ActivitySupportBinding;
 import com.dilanne.bypass.util.LocaleHelper;
 
+import com.dilanne.bypass.util.LocaleHelper;
+
 public class SupportActivity extends AppCompatActivity {
+
+
 
     private ActivitySupportBinding binding;
 

@@ -19,6 +19,8 @@ import com.dilanne.bypass.models.PasswordEntry;
 import com.dilanne.bypass.ui.viewmodels.PasswordViewModel;
 import com.dilanne.bypass.util.LocaleHelper;
 
+import com.dilanne.bypass.util.LocaleHelper;
+
 public class PasswordDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_PASSWORD_ENTRY = "extra_password_entry";

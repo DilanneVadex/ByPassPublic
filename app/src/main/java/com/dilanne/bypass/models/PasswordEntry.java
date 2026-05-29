@@ -17,6 +17,11 @@ public class PasswordEntry implements Serializable {
     private String category;
     private long lastModified;
     private boolean isFavorite;
+    private String securityStrength;
+    private int securityStrengthColor;
+    private String securityStatus;
+    private int securityStatusColor;
+    private boolean isCompromised;
 
     public PasswordEntry() {
         this.lastModified = System.currentTimeMillis();
@@ -49,4 +54,15 @@ public class PasswordEntry implements Serializable {
     public void setLastModified(long lastModified) { this.lastModified = lastModified; }
     public boolean isFavorite() { return isFavorite; }
     public void setFavorite(boolean favorite) { isFavorite = favorite; }
+
+    public String getSecurityStrength() { return securityStrength; }
+    public void setSecurityStrength(String securityStrength) { this.securityStrength = securityStrength; }
+    public int getSecurityStrengthColor() { return securityStrengthColor; }
+    public void setSecurityStrengthColor(int securityStrengthColor) { this.securityStrengthColor = securityStrengthColor; }
+    public String getSecurityStatus() { return securityStatus; }
+    public void setSecurityStatus(String securityStatus) { this.securityStatus = securityStatus; }
+    public int getSecurityStatusColor() { return securityStatusColor; }
+    public void setSecurityStatusColor(int securityStatusColor) { this.securityStatusColor = securityStatusColor; }
+    public boolean isCompromised() { return isCompromised; }
+    public void setCompromised(boolean compromised) { isCompromised = compromised; }
 }

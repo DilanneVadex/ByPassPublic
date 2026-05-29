@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    private final List<Category> categories;
+    private List<Category> categories;
     private final OnCategoryClickListener listener;
     private int selectedPosition = -1;
 
@@ -25,6 +25,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public CategoryAdapter(List<Category> categories, OnCategoryClickListener listener) {
         this.categories = categories;
         this.listener = listener;
+    }
+
+    public void updateCategories(List<Category> newCategories) {
+        this.categories = newCategories;
+        notifyDataSetChanged();
+    }
+
+    public void setSelectedCategory(String categoryName) {
+        for (int i = 0; i < categories.size(); i++) {
+            if (categories.get(i).getName().equalsIgnoreCase(categoryName)) {
+                selectedPosition = i;
+                notifyDataSetChanged();
+                break;
+            }
+        }
     }
 
     @NonNull
