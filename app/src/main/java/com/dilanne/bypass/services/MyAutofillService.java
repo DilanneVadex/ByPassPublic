@@ -11,23 +11,10 @@ import android.service.autofill.FillResponse;
 import android.service.autofill.SaveCallback;
 import android.service.autofill.SaveRequest;
 import android.util.Log;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
 import android.view.View;
 import android.view.autofill.AutofillId;
 import android.view.autofill.AutofillValue;
 import android.widget.RemoteViews;
-import android.util.Log;
-import android.util.Log;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -44,6 +31,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MyAutofillService extends AutofillService {
+
+    private static final String TAG = "MyAutofillService";
 
     @Override
     public void onFillRequest(@NonNull FillRequest request, @NonNull CancellationSignal cancellationSignal, @NonNull FillCallback callback) {
@@ -83,7 +72,7 @@ public class MyAutofillService extends AutofillService {
             try {
                 base64Key = encryptedPrefs.getString("master_crypto_key_" + userId, null);
             } catch (Exception e) {
-                Log.e("MyAutofillService", "Decryption failed for local crypto key. Clearing corrupted storage.", e);
+                Log.e(TAG, "Decryption failed for local crypto key. Clearing corrupted storage.", e);
                 SecurePrefs.handleCorruption(this);
             }
 
@@ -107,8 +96,6 @@ public class MyAutofillService extends AutofillService {
         if (filteredEntries.isEmpty()) {
             filteredEntries = entries;
         }
-
-        //CryptoManager cryptoManager = new CryptoManager();
 
         FillResponse.Builder responseBuilder = new FillResponse.Builder();
 
@@ -156,7 +143,7 @@ public class MyAutofillService extends AutofillService {
     private void identifyFields(AssistStructure.ViewNode node, List<AutofillId> emailIds, List<AutofillId> passwordIds) {
         if (node == null) return;
 
-        String hint = node.getHint() != null ? node.getHint().toString().toLowerCase() : "";
+        String hint = node.getHint() != null ? node.getHint().toLowerCase() : "";
         String idEntry = node.getIdEntry() != null ? node.getIdEntry().toLowerCase() : "";
         
         boolean isEmailField = hint.contains("email") || hint.contains("username") || hint.contains("login") ||
@@ -211,7 +198,7 @@ public class MyAutofillService extends AutofillService {
         AutofillValue value = node.getAutofillValue();
         if (value != null && value.isText()) {
             String text = value.getTextValue().toString();
-            String hint = node.getHint() != null ? node.getHint().toString().toLowerCase() : "";
+            String hint = node.getHint() != null ? node.getHint().toLowerCase() : "";
             String idEntry = node.getIdEntry() != null ? node.getIdEntry().toLowerCase() : "";
 
             if (hint.contains("email") || hint.contains("username") || idEntry.contains("email") || idEntry.contains("username")) {
@@ -270,8 +257,6 @@ public class MyAutofillService extends AutofillService {
         entry.setEncryptedPassword(cryptoManager.encrypt(password));
         entry.setCategory("Social"); // Default category
 
-        new Thread(() -> {
-            dao.insert(entry);
-        }).start();
+        new Thread(() -> dao.insert(entry)).start();
     }
 }

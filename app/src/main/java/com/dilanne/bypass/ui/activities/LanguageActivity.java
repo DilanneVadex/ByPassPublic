@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.dilanne.bypass.MainActivity;
 import com.dilanne.bypass.R;
@@ -27,24 +28,32 @@ public class LanguageActivity extends AppCompatActivity {
         binding = ActivityLanguageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = getSharedPreferences("settings_prefs", MODE_PRIVATE);
         selectedLang = prefs.getString("Locale.Helper.Selected.Language", "en");
         
         preSelectLanguage();
 
         binding.btnBack.setOnClickListener(v -> finish());
 
-        binding.rgLanguages.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rbEnglish) {
+        // Manual management of RadioButtons because they are nested in MaterialCardViews
+        View.OnClickListener languageClickListener = v -> {
+            int id = v.getId();
+            updateRadioButtons(id);
+            if (id == R.id.rbEnglish) {
                 selectedLang = "en";
-            } else if (checkedId == R.id.rbFrench) {
+            } else if (id == R.id.rbFrench) {
                 selectedLang = "fr";
-            } else if (checkedId == R.id.rbGerman) {
+            } else if (id == R.id.rbGerman) {
                 selectedLang = "de";
-            } else if (checkedId == R.id.rbRussian) {
+            } else if (id == R.id.rbRussian) {
                 selectedLang = "ru";
             }
-        });
+        };
+
+        binding.rbEnglish.setOnClickListener(languageClickListener);
+        binding.rbFrench.setOnClickListener(languageClickListener);
+        binding.rbGerman.setOnClickListener(languageClickListener);
+        binding.rbRussian.setOnClickListener(languageClickListener);
 
         binding.btnConfirm.setOnClickListener(v -> {
             LocaleHelper.setLocale(this, selectedLang);
@@ -58,19 +67,28 @@ public class LanguageActivity extends AppCompatActivity {
     }
 
     private void preSelectLanguage() {
-        switch (selectedLang) {
-            case "fr":
-                binding.rbFrench.setChecked(true);
-                break;
-            case "de":
-                binding.rbGerman.setChecked(true);
-                break;
-            case "ru":
-                binding.rbRussian.setChecked(true);
-                break;
-            default:
-                binding.rbEnglish.setChecked(true);
-                break;
-        }
+            int idToCheck;
+            switch (selectedLang) {
+                case "fr":
+                    idToCheck = R.id.rbFrench;
+                    break;
+                case "de":
+                    idToCheck = R.id.rbGerman;
+                    break;
+                case "ru":
+                    idToCheck = R.id.rbRussian;
+                    break;
+                default:
+                    idToCheck = R.id.rbEnglish;
+                    break;
+            }
+            updateRadioButtons(idToCheck);
+    }
+
+    private void updateRadioButtons(int checkedId) {
+        binding.rbEnglish.setChecked(checkedId == R.id.rbEnglish);
+        binding.rbFrench.setChecked(checkedId == R.id.rbFrench);
+        binding.rbGerman.setChecked(checkedId == R.id.rbGerman);
+        binding.rbRussian.setChecked(checkedId == R.id.rbRussian);
     }
 }

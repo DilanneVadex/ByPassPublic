@@ -1,8 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ByPass" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Base.Theme.ByPass" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/vp_purple_title</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
