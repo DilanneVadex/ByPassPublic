@@ -203,6 +203,7 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/primary"
+                android:textColor="@color/white"
                 android:fontFamily="@font/lobster"
                 android:text="@string/btn_generate"
                 android:textAllCaps="false"
